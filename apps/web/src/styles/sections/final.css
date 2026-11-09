@@ -1,0 +1,7 @@
+/* final */
+.final{position:relative;overflow:hidden;padding-block:clamp(90px,12vw,170px);text-align:center}
+.final .big{font:700 clamp(64px,17vw,260px)/.82 var(--f-display);letter-spacing:-.065em;background:linear-gradient(100deg,var(--paper) 0 40%,var(--acc-hi) 50%,var(--paper) 60% 100%);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:sheen 7s ease-in-out infinite;white-space:nowrap}
+@keyframes sheen{0%,100%{background-position:100% 0}50%{background-position:0 0}}
+.final p{color:var(--muted);font-size:19px;margin:26px auto 34px;max-width:520px}
+.final .ctas{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+

@@ -1,0 +1,53 @@
+/* reels */
+.rl{height:100%;position:relative;background:#111;color:#fff;font-family:"Figtree",sans-serif;user-select:none;cursor:pointer}
+.rl-prog{position:absolute;left:4cqw;right:4cqw;top:calc(48px + 1cqh);display:flex;gap:1.4cqw;z-index:4}
+.rl-prog i{flex:1;height:3px;border-radius:3px;background:rgba(255,255,255,.3);overflow:hidden}
+.rl-prog i span{display:block;height:100%;width:0;background:#fff}
+.rl-prog i.done span{width:100%}
+.rl-prog i.run span{animation:rlprog var(--d,7s) linear forwards}
+@keyframes rlprog{to{width:100%}}
+.rl-top{position:absolute;left:5cqw;right:5cqw;top:calc(52px + 3cqh);display:flex;align-items:center;gap:2.4cqw;z-index:4;font-size:3.6cqw;font-weight:600}
+.rl-top i{width:8cqw;height:8cqw;border-radius:50%;background:#F7F6F2;color:#1D2030;display:grid;place-items:center;font:italic 400 4cqw "Fraunces",serif}
+.rl-top span{margin-left:auto;font-size:3cqw;opacity:.8;font-weight:500}
+.rl-side{position:absolute;right:4cqw;bottom:20cqh;display:grid;gap:4cqh;z-index:4;text-align:center;font-size:3cqw;font-weight:600}
+.rl-side svg{width:8cqw;height:8cqw;display:block;margin:0 auto 1cqh}
+.rl-cap{position:absolute;left:5cqw;right:18cqw;bottom:5cqh;z-index:4;display:grid;gap:1.4cqh;font-size:3.4cqw;line-height:1.35}
+.rl-cap b{font-weight:600}
+.rl-cap .rl-buy{justify-self:start;display:flex;align-items:center;gap:2cqw;background:rgba(247,246,242,.95);color:#1D2030;border-radius:3cqw;padding:2cqw 3cqw;font-weight:600;font-size:3.2cqw;border:0;cursor:pointer}
+.rl-music{display:flex;gap:2cqw;align-items:center;font-size:3cqw;opacity:.9;overflow:hidden;white-space:nowrap}
+.rl-slide{position:absolute;inset:0;overflow:hidden;opacity:0;transition:opacity .4s}
+.rl-slide.on{opacity:1}
+.rl-slide::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.35),transparent 22%,transparent 60%,rgba(0,0,0,.55))}
+.rl-1{background:linear-gradient(170deg,#1D2030,#4B5578 70%,#A9B8D6)}
+.rl-1 .big{position:absolute;left:7cqw;top:22cqh;font:300 22cqw/.86 "Fraunces",serif;letter-spacing:-.05em}
+.rl-1 .big span{display:block;opacity:0;transform:translateY(30%)}
+.rl-1.on .big span{animation:rlword .9s cubic-bezier(.2,.8,.2,1) forwards}
+.rl-1.on .big span:nth-child(2){animation-delay:.35s;font-style:italic;color:#C9D3F0}
+@keyframes rlword{to{opacity:1;transform:none}}
+.rl-1 .g{position:absolute;bottom:16cqh;width:46cqw;left:27cqw;opacity:0}
+.rl-1.on .g{animation:rlg 6s ease-in-out infinite}
+.rl-1.on .g:nth-of-type(2){animation-delay:2s}.rl-1.on .g:nth-of-type(3){animation-delay:4s}
+@keyframes rlg{0%{opacity:0;transform:translateX(40%) rotate(8deg)}8%,30%{opacity:1;transform:none}38%,100%{opacity:0;transform:translateX(-40%) rotate(-8deg)}}
+.rl-2{background:#E8D9C4;color:#1D2030}
+.rl-2 h6{position:absolute;left:7cqw;right:7cqw;top:22cqh;margin:0;font:400 9cqw/.95 "Fraunces",serif;letter-spacing:-.03em}
+.rl-2 h6 em{font-style:italic;color:#8A6E4B}
+.rl-2 .base{position:absolute;left:22cqw;width:56cqw;top:42cqh}
+.rl-2 .opt{position:absolute;left:0;right:0;bottom:22cqh;text-align:center;font-weight:600;font-size:4cqw;opacity:0}
+.rl-2 .opt b{display:inline-grid;place-items:center;width:9cqw;height:9cqw;border-radius:50%;background:#1D2030;color:#E8D9C4;margin-right:2cqw}
+.rl-2.on .opt{animation:rlopt 6s infinite}
+.rl-2.on .opt:nth-of-type(2){animation-delay:2s}.rl-2.on .opt:nth-of-type(3){animation-delay:4s}
+@keyframes rlopt{0%{opacity:0;transform:translateY(20px)}6%,30%{opacity:1;transform:none}36%,100%{opacity:0}}
+.rl-3{background:#A9B8D6;color:#1D2030}
+.rl-3 h6{position:absolute;left:7cqw;top:20cqh;margin:0;font:400 10cqw/.92 "Fraunces",serif;letter-spacing:-.03em}
+.rl-3 h6 em{font-style:italic}
+.rl-3 svg.sk{position:absolute;left:18cqw;width:64cqw;top:38cqh}
+.rl-3 .sk path{fill:none;stroke:#1D2030;stroke-width:1.2;stroke-dasharray:600;stroke-dashoffset:600}
+.rl-3.on .sk path{animation:rldraw 3.2s ease forwards}
+.rl-3 .sk .fill{fill:#F7F6F2;stroke:none;opacity:0}
+.rl-3.on .sk .fill{animation:rlfill 1s 3s forwards}
+@keyframes rldraw{to{stroke-dashoffset:0}}
+@keyframes rlfill{to{opacity:1}}
+.rl-nav{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;z-index:3}
+.rl-nav button{background:none;border:0;cursor:pointer}
+.rl-heart.on svg{fill:#FF4D6D;stroke:#FF4D6D;animation:anbump .4s}
+

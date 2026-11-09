@@ -1,0 +1,18 @@
+/* plans */
+.plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:stretch}
+.plan{border-radius:24px;padding:30px 28px;display:grid;gap:22px;align-content:start;background:#fff;box-shadow:0 0 0 1px var(--line-ink);min-width:0}
+.plan.hi{background:var(--ink);color:var(--paper);box-shadow:0 0 0 2px var(--acc)}
+.plan h3{font-size:30px;letter-spacing:-.03em}
+.plan .for{color:var(--muted-ink);font-size:15px;min-height:48px}
+.plan.hi .for{color:var(--muted)}
+.plan ul{list-style:none;margin:0;padding:0;display:grid;gap:11px;font-size:15px}
+.plan li{display:grid;grid-template-columns:18px 1fr;gap:10px;align-items:start}
+.plan li::before{content:"";width:10px;height:9px;background:var(--acc);margin-top:7px}
+.plan .price{font:500 13px var(--f-mono);color:var(--muted-ink);border-top:1px dashed var(--line-ink);padding-top:18px;display:grid;gap:4px}
+.plan .price b{font:700 34px/1 var(--f-display);letter-spacing:-.035em;color:var(--ink)}
+.plan.hi .price b{color:var(--paper)}
+.plan.hi .price{color:var(--muted);border-color:var(--line)}
+.plan .btn{justify-content:center;width:100%}
+.plan:not(.hi) .btn{background:var(--ink);color:var(--paper)}
+.plan:not(.hi) .btn:hover{background:#26262c}
+

@@ -1,0 +1,53 @@
+    <section data-v="presupuestos" hidden>
+      <div id="qList" style="display:grid;gap:14px">
+        <div class="acts"><button class="btn" type="button" id="qNew"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Nuevo presupuesto</button><button class="btn ghost" type="button" id="qCoBtn">Datos de empresa</button><button class="btn ghost" type="button" id="expQ">Exportar CSV</button></div>
+        <div class="card" style="padding:6px"><div class="tbl-wrap" style="box-shadow:none"><table class="qt"><thead><tr><th>Nº</th><th>Cliente</th><th>Fecha</th><th class="r">Total</th><th class="r">Cuota</th><th>Estado</th></tr></thead><tbody id="qRows"></tbody></table></div></div>
+      </div>
+      <div class="qed" id="qEd" hidden>
+        <form class="card qform" id="qForm" novalidate>
+          <div class="qsec">
+            <div class="fg3">
+              <div class="f"><label for="q-num">Nº</label><input type="text" id="q-num" readonly></div>
+              <div class="f"><label for="q-fecha">Fecha</label><input type="date" id="q-fecha"></div>
+              <div class="f"><label for="q-validez">Validez (días)</label><input type="number" id="q-validez" min="1" step="1"></div>
+              <div class="f"><label for="q-estado">Estado</label><select id="q-estado"><option value="borrador">Borrador</option><option value="enviado">Enviado</option><option value="aceptado">Aceptado</option><option value="rechazado">Rechazado</option></select></div>
+            </div>
+          </div>
+          <div class="qsec">
+            <span class="lbl">Cliente</span>
+            <select id="q-lead" aria-label="Elegir cliente"></select>
+            <div class="fg">
+              <div class="f"><label for="q-c-negocio">Negocio o razón social</label><input type="text" id="q-c-negocio"></div>
+              <div class="f"><label for="q-c-nif">NIF / CIF</label><input type="text" id="q-c-nif" placeholder="B12345678"></div>
+              <div class="f"><label for="q-c-nombre">Contacto</label><input type="text" id="q-c-nombre"></div>
+              <div class="f"><label for="q-c-email">Email</label><input type="email" id="q-c-email"></div>
+              <div class="f"><label for="q-c-telefono">Teléfono</label><input type="tel" id="q-c-telefono"></div>
+              <div class="f"><label for="q-c-direccion">Dirección</label><input type="text" id="q-c-direccion" placeholder="Rúa do Príncipe 12, Vigo"></div>
+            </div>
+          </div>
+          <div class="qsec">
+            <span class="lbl"><span>Conceptos</span></span>
+            <div class="qlines" id="qLines"></div>
+            <div class="qadd"><select id="qCat" aria-label="Añadir desde tarifas"></select><button class="btn sm ghost" type="button" id="qAddLine">Línea en blanco</button></div>
+          </div>
+          <div class="qsec">
+            <div class="fg3">
+              <div class="f"><label for="q-desc">Descuento %</label><input type="number" id="q-desc" min="0" max="100" step="1"></div>
+              <div class="f"><label for="q-iva">IVA %</label><input type="number" id="q-iva" min="0" max="30" step="1"></div>
+              <div class="f"><label for="q-irpf">Retención IRPF %</label><input type="number" id="q-irpf" min="0" max="30" step="1"></div>
+            </div>
+            <div class="qtot" id="qTot"></div>
+          </div>
+          <div class="qsec">
+            <div class="f"><label for="q-notas">Notas para el cliente</label><textarea id="q-notas" rows="2" placeholder="Incluye dos rondas de cambios en el diseño."></textarea></div>
+            <div class="f"><label for="q-cond">Condiciones</label><textarea id="q-cond" rows="3"></textarea></div>
+          </div>
+          <p class="err" id="qErr" role="alert"></p>
+          <div class="dlg-f">
+            <div class="l"><button class="btn sm ghost" type="button" id="qBack">Volver</button><button class="btn sm danger" type="button" id="qDel">Eliminar</button><span id="qDelQ" hidden><button class="btn sm danger" type="button" id="qDelY">Sí, eliminar</button> <button class="btn sm ghost" type="button" id="qDelN">No</button></span></div>
+            <div class="r"><button class="btn sm ghost" type="submit" id="qSave">Guardar</button><button class="btn sm" type="button" id="qPdf">Descargar PDF</button></div>
+          </div>
+        </form>
+        <div class="qprev"><span class="lbl"><span>Vista previa</span><span id="qSaved"></span></span><div class="doc" id="qDoc"></div></div>
+      </div>
+    </section>

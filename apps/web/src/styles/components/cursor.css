@@ -1,0 +1,14 @@
+/* brand cursor */
+.bcur{position:fixed;left:0;top:0;width:16px;height:14px;background:var(--acc);pointer-events:none;z-index:100;mix-blend-mode:normal;transform:translate3d(-100px,-100px,0);transition:width .25s,height .25s,opacity .25s,border-radius .25s;opacity:0}
+.bcur.on{opacity:1}
+.bcur.big{width:44px;height:38px;border-radius:6px;opacity:.85;mix-blend-mode:difference;background:#fff}
+@media (pointer:fine){body.has-cur,body.has-cur a,body.has-cur button,body.has-cur summary,body.has-cur .opt span{cursor:none}}
+
+/* scroll-driven reveals (transform only; content readable without them) */
+@supports (animation-timeline: view()){
+  .rv{animation:rv linear both;animation-timeline:view();animation-range:entry 0% cover 30%}
+  @keyframes rv{from{transform:translateY(60px) scale(.97)}to{transform:none}}
+  .step .vis{animation:vis linear both;animation-timeline:view();animation-range:entry 10% cover 50%}
+  @keyframes vis{from{transform:rotateX(18deg) translateY(30px)}to{transform:none}}
+}
+

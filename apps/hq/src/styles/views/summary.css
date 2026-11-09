@@ -1,0 +1,53 @@
+/* v2: filters, kpis, goals, alerts */
+.fbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.segc{min-width:0;flex:0 1 auto;display:flex;gap:2px;padding:3px;border-radius:11px;background:var(--panel);box-shadow:inset 0 0 0 1px var(--line);overflow-x:auto;scrollbar-width:none;max-width:100%}
+.segc::-webkit-scrollbar{display:none}
+.segc button{border:0;background:transparent;color:var(--muted);padding:7px 11px;border-radius:8px;font:500 13px var(--f-body);cursor:pointer;white-space:nowrap;transition:background .2s,color .2s}
+.segc button:hover{color:var(--paper)}
+.segc button[aria-pressed=true]{background:var(--panel-2);color:var(--paper)}
+.fbar select{width:auto;min-height:38px;padding:7px 10px;font-size:13.5px;background:var(--panel)}
+.fbar .upd{margin-left:auto;color:var(--dim)}
+.kpis6{grid-template-columns:repeat(3,minmax(0,1fr))}
+.kpi .kv{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.kpi b small.u{font:500 14px var(--f-body);color:var(--muted);letter-spacing:0}
+.kpi small.vs{color:var(--dim);font-size:11.5px;margin-top:-2px}
+.delta{font:600 11.5px var(--f-mono);padding:2px 7px;border-radius:6px;white-space:nowrap}
+.delta.up{color:var(--ok);background:var(--ok-soft)}.delta.down{color:var(--bad);background:var(--bad-soft)}.delta.eq{color:var(--muted);background:rgba(245,242,236,.06)}
+.gbar{position:relative;height:6px;border-radius:4px;background:rgba(245,242,236,.08);margin-top:6px}
+.gbar i{position:absolute;left:0;top:0;bottom:0;border-radius:4px;background:var(--ok);transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.gbar i.warn{background:var(--warn)}.gbar i.bad{background:var(--bad)}
+.gbar u{position:absolute;top:-4px;bottom:-4px;width:2px;border-radius:1px;background:var(--paper);opacity:.55}
+.trend{grid-template-columns:minmax(0,1.45fr) minmax(0,1fr)}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font:500 11.5px var(--f-mono);color:var(--muted)}
+.legend i{display:inline-block;width:16px;height:3px;border-radius:2px;margin-right:6px;vertical-align:middle}
+#trend .hit{cursor:crosshair}
+.row.al{grid-template-columns:auto minmax(0,1fr) auto}
+.row.al b,.row.al small{white-space:normal;overflow:visible}
+.al .sev{width:8px;height:8px;border-radius:50%;background:var(--muted)}
+.al.bad .sev{background:var(--bad);box-shadow:0 0 8px var(--bad)}.al.warn .sev{background:var(--warn)}.al.acc .sev{background:var(--acc)}.al.ok .sev{background:var(--ok)}
+.al.bad{box-shadow:inset 0 0 0 1px rgba(255,107,94,.28)}
+.bar2{display:grid;grid-template-columns:84px minmax(0,1fr) auto;gap:10px;align-items:center;font-size:13px}
+.bar2>span:first-child{color:var(--soft)}
+.bar2>div{display:grid;gap:3px}
+.bar2 .track{height:7px;border-radius:4px;background:rgba(245,242,236,.06);overflow:hidden}
+.bar2 .track i{display:block;height:100%;border-radius:4px;transition:width .5s}
+.bar2 .v{font:500 11.5px var(--f-mono);color:var(--muted)}
+.goal{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 10px;padding:10px 0;border-bottom:1px solid var(--line);align-items:center}
+.goal:last-child{border-bottom:0}
+.goal-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:13.5px;min-width:0}
+.goal-h b{font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.goal .gbw{grid-column:1/2}
+.goal .gbw .gbar{margin-top:2px}
+.goal>.chip{grid-row:1/span 2;grid-column:2;align-self:center}
+.gform .goal{grid-template-columns:minmax(0,1fr) 140px minmax(0,1.3fr) 110px;gap:14px}
+.gform .goal .gbw{grid-column:auto;display:grid;gap:4px}
+.gform .goal .gbw small{color:var(--muted);font-size:12px}
+.gform .goal>.chip{grid-row:auto;grid-column:auto;justify-self:end}
+.gform input{min-height:38px;padding:7px 10px}
+.mnav{display:flex;align-items:center;gap:10px}
+.mnav h2{min-width:150px;text-align:center}
+.tgrp{list-style:none;font:500 11px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:10px 2px 2px}
+.tgrp:first-child{padding-top:0}
+@media (max-width:1060px){.kpis6{grid-template-columns:repeat(2,minmax(0,1fr))}.trend{grid-template-columns:1fr}}
+@media (max-width:760px){.gform .goal{grid-template-columns:minmax(0,1fr) 110px}.gform .goal .gbw{grid-column:1/-1}.gform .goal>.chip{grid-column:2;grid-row:1}.gform .goal input{grid-column:1;grid-row:2}.fbar .upd{margin-left:0;width:100%}.kpi b{font-size:24px}}
+

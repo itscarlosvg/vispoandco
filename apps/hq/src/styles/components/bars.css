@@ -1,0 +1,11 @@
+/* bars */
+.bars{display:grid;gap:10px}
+.bar{display:grid;grid-template-columns:104px minmax(0,1fr) auto;gap:10px;align-items:center;font-size:13px}
+.bar span:first-child{color:var(--soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar .track{height:10px;border-radius:5px;background:rgba(245,242,236,.06);overflow:hidden}
+.bar .track i{display:block;height:100%;border-radius:5px;background:var(--acc);transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.bar .v{font:500 12px var(--f-mono);color:var(--muted);text-align:right;min-width:88px}
+.chart{width:100%;height:auto;display:block}
+.chart text{font:500 11px var(--f-mono);fill:var(--muted)}
+.chart .vlab{fill:var(--soft)}
+

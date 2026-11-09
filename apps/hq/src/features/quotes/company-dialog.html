@@ -1,0 +1,21 @@
+<dialog id="coDlg" aria-labelledby="coT">
+  <form class="dlg" id="coForm" novalidate>
+    <div class="dlg-h"><h2 id="coT">Datos de empresa</h2><button class="xbtn" type="button" id="coClose" aria-label="Cerrar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+    <div class="fg">
+      <div class="f"><label for="co-nombre">Nombre comercial</label><input type="text" id="co-nombre"></div>
+      <div class="f"><label for="co-titular">Titular o razón social</label><input type="text" id="co-titular" placeholder="Carlos Adolfo Vispo González"></div>
+      <div class="f"><label for="co-nif">NIF / CIF</label><input type="text" id="co-nif"></div>
+      <div class="f"><label for="co-email">Email</label><input type="email" id="co-email"></div>
+      <div class="f"><label for="co-telefono">Teléfono</label><input type="tel" id="co-telefono"></div>
+      <div class="f"><label for="co-web">Web o Instagram</label><input type="text" id="co-web"></div>
+      <div class="f full"><label for="co-direccion">Dirección fiscal</label><input type="text" id="co-direccion"></div>
+      <div class="f full"><label for="co-iban">IBAN para transferencias</label><input type="text" id="co-iban" placeholder="ES00 0000 0000 0000 0000 0000"></div>
+      <div class="f"><label for="co-iva">IVA por defecto %</label><input type="number" id="co-iva" min="0" max="30"></div>
+      <div class="f"><label for="co-irpf">Retención IRPF por defecto %</label><input type="number" id="co-irpf" min="0" max="30"></div>
+      <div class="f"><label for="co-validez">Validez por defecto (días)</label><input type="number" id="co-validez" min="1"></div>
+      <div class="f full"><label for="co-cond">Condiciones por defecto</label><textarea id="co-cond" rows="4"></textarea></div>
+    </div>
+    <p class="err" id="coErr" role="alert"></p>
+    <div class="dlg-f"><span></span><div class="r"><button class="btn" type="submit" id="coSave">Guardar</button></div></div>
+  </form>
+</dialog>

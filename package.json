@@ -1,0 +1,21 @@
+{
+  "name": "vispoandco",
+  "version": "1.0.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "author": "Carlos Adolfo Vispo González",
+  "description": "Vispo & Co. — web pública y dashboard interno (Vispo HQ).",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "build:web": "node scripts/build.mjs web",
+    "build:hq": "node scripts/build.mjs hq",
+    "test": "node scripts/build.mjs web && node tests/e2e/quote-booking.test.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.49.0"
+  }
+}

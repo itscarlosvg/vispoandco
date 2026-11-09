@@ -1,0 +1,8 @@
+/* chips */
+.chip{display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 8px;border-radius:7px;font:500 11px var(--f-mono);letter-spacing:.02em;background:rgba(245,242,236,.07);color:var(--soft);white-space:nowrap}
+.chip.acc{background:var(--acc-soft);color:var(--acc-hi)}
+.chip.ok{background:var(--ok-soft);color:var(--ok)}
+.chip.warn{background:var(--warn-soft);color:var(--warn)}
+.chip.bad{background:var(--bad-soft);color:var(--bad)}
+.chip.ex{background:transparent;box-shadow:inset 0 0 0 1px var(--line-2);color:var(--dim)}
+

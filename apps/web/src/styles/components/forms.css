@@ -1,0 +1,28 @@
+/* contact / brief builder */
+.contact{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(28px,5vw,72px);align-items:start}
+.contact h2{font-size:var(--s-2)}
+.contact .aside{display:grid;gap:22px;position:sticky;top:110px}
+.contact .aside p{color:#CFCCC4;font-size:18px;max-width:440px}
+.handle{display:inline-flex;align-items:center;gap:12px;font:600 22px var(--f-display);text-decoration:none;color:var(--paper);padding:14px 18px;border-radius:14px;box-shadow:inset 0 0 0 1px var(--line);width:max-content;max-width:100%}
+.handle:hover{box-shadow:inset 0 0 0 1px var(--acc)}
+form.brief{border-radius:26px;background:var(--ink-2);box-shadow:inset 0 0 0 1px var(--line);padding:clamp(22px,3.4vw,40px);display:grid;gap:24px}
+.field{display:grid;gap:9px;min-width:0}
+.field > label,.field > .lbl{font:500 12.5px var(--f-mono);letter-spacing:.06em;color:var(--muted);text-transform:uppercase}
+.row2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+input[type=text],input[type=tel],input[type=email],textarea,select{width:100%;font:400 16px var(--f-body);color:var(--paper);background:var(--ink);border:0;border-radius:12px;padding:14px 16px;box-shadow:inset 0 0 0 1px var(--line);transition:box-shadow .2s}
+input[type=text]:focus,input[type=tel]:focus,input[type=email]:focus,textarea:focus,select:focus{outline:none;box-shadow:inset 0 0 0 1.5px var(--acc)}
+textarea{min-height:110px;resize:vertical}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{position:relative}
+.opt input{position:absolute;opacity:0;inset:0;cursor:pointer}
+.opt span{display:inline-flex;align-items:center;gap:8px;padding:10px 15px;border-radius:12px;font-size:14.5px;box-shadow:inset 0 0 0 1px var(--line);color:#D9D6CF;transition:all .2s;cursor:pointer}
+.opt span::before{content:"";width:9px;height:9px;border-radius:2px;box-shadow:inset 0 0 0 1.5px var(--muted)}
+.opt input:checked + span{background:var(--acc-soft);box-shadow:inset 0 0 0 1.5px var(--acc);color:var(--paper)}
+.opt input:checked + span::before{background:var(--acc);box-shadow:none}
+.opt input:focus-visible + span{outline:2px solid var(--acc-hi);outline-offset:2px}
+.err{color:var(--acc-hi);font-size:13.5px;min-height:1em}
+.summary{border-radius:16px;background:var(--ink);box-shadow:inset 0 0 0 1px var(--line);padding:18px;font:400 13.5px/1.6 var(--f-mono);color:#D9D6CF;white-space:pre-wrap;word-break:break-word}
+.done{display:grid;gap:18px}
+.done h3{font-size:30px}
+.done .acts{display:flex;flex-wrap:wrap;gap:10px}
+

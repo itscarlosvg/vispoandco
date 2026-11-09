@@ -1,0 +1,8 @@
+/* extras */
+.extras{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line-ink);border-radius:22px;overflow:hidden;box-shadow:0 0 0 1px var(--line-ink)}
+.ex{background:var(--paper);padding:28px 24px 30px;display:grid;gap:14px;align-content:start;transition:background .3s}
+.ex:hover{background:#fff}
+.ex svg{width:34px;height:34px;color:var(--acc-ink)}
+.ex h3{font-size:21px;letter-spacing:-.02em}
+.ex p{color:var(--muted-ink);font-size:15px;line-height:1.5}
+

@@ -1,0 +1,9 @@
+/* work */
+.work{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;perspective:1200px}
+.case{border-radius:22px;overflow:hidden;background:var(--ink-2);box-shadow:inset 0 0 0 1px var(--line);transform-style:preserve-3d;transition:transform .5s cubic-bezier(.2,.8,.2,1);will-change:transform;text-decoration:none;display:grid}
+.case .shot{aspect-ratio:4/3.1;position:relative;overflow:hidden;max-width:100%}
+.case .meta{padding:20px 22px 24px;display:grid;gap:6px}
+.case h3{font-size:24px;letter-spacing:-.02em}
+.case .tags{font:500 12px var(--f-mono);color:var(--muted)}
+.case .tag{position:absolute;left:14px;top:14px;font:500 11px var(--f-mono);background:rgba(11,11,13,.7);color:var(--paper);padding:5px 9px;border-radius:7px;backdrop-filter:blur(6px)}
+

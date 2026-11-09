@@ -1,0 +1,9 @@
+/* section heads */
+section{scroll-margin-top:100px}
+.sec{padding-block:clamp(80px,10vw,140px)}
+.head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.8fr);gap:40px;align-items:end;margin-bottom:56px}
+.head h2{font-size:var(--s-2)}
+.head p{color:var(--muted);font-size:18px;max-width:520px}
+.paper{background:var(--paper);color:var(--ink)}
+.paper .head p{color:var(--muted-ink)}
+

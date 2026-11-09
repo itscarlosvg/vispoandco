@@ -1,0 +1,18 @@
+    <section data-v="resumen">
+      <div class="fbar">
+        <div class="segc" role="group" aria-label="Periodo" id="fPer"><button type="button" data-p="mes" aria-pressed="true">Este mes</button><button type="button" data-p="mesant" aria-pressed="false">Mes pasado</button><button type="button" data-p="trim" aria-pressed="false">Trimestre</button><button type="button" data-p="anio" aria-pressed="false">Año</button><button type="button" data-p="u12" aria-pressed="false">12 meses</button></div>
+        <select id="fSrc" aria-label="Fuente"><option value="">Todas las fuentes</option></select>
+        <select id="fSec" aria-label="Sector"><option value="">Todos los sectores</option></select>
+        <span class="mono upd" id="fUpd"></span>
+      </div>
+      <div class="grid kpis6" id="kpis"></div>
+      <div class="grid trend">
+        <div class="card"><div class="card-h"><h2>Facturación cerrada</h2><span class="lbl" id="trLbl">Últimos 12 meses</span></div><svg class="chart" id="trend" viewBox="0 0 640 240" role="img" aria-label="Facturación cerrada por mes y objetivo"></svg><div class="legend"><span><i style="background:#E8336F"></i>Facturado</span><span><i style="background:repeating-linear-gradient(90deg,#9C9BA4 0 4px,transparent 4px 7px)"></i>Objetivo</span></div></div>
+        <div class="card"><div class="card-h"><h2>Requiere atención</h2><span class="lbl" id="alN"></span></div><ul class="list" id="alerts"></ul></div>
+      </div>
+      <div class="grid three">
+        <div class="card"><div class="card-h"><h2>Objetivos de <span id="goMon"></span></h2><button class="btn sm ghost" type="button" data-go2="objetivos">Editar</button></div><div id="goals"></div></div>
+        <div class="card"><div class="card-h"><h2>Embudo</h2><span class="lbl">Ahora</span></div><div class="bars" id="funnel"></div></div>
+        <div class="card"><div class="card-h"><h2>Canales</h2><span class="lbl">Leads · ganados · conversión</span></div><div id="sources" style="display:grid;gap:10px"></div></div>
+      </div>
+    </section>

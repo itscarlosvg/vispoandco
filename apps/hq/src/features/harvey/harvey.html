@@ -1,0 +1,24 @@
+  <aside class="harvey" aria-label="Harvey">
+    <div class="hv-h">
+      <span class="hv-av"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 4.6L18.5 9l-4.7 1.6L12 15l-1.8-4.4L5.5 9l4.7-1.4z"/><path d="M18.5 15.5l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7z"/></svg></span>
+      <div><b>Harvey</b><small id="hvState"><i></i><span>Listo</span></small></div>
+      <button class="xbtn" type="button" id="hvNew" title="Nueva conversación" aria-label="Nueva conversación"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+    </div>
+    <div class="hv-msgs" id="hvMsgs" aria-live="polite">
+      <div class="hv-start" id="hvStart">
+        <h3>¿En qué te ayudo?</h3>
+        <p>Veo tus clientes, tu agenda y tus tarifas, y puedo actualizarlos por ti.</p>
+        <div class="sugs" id="sugs">
+          <button type="button">¿Qué tengo que hacer hoy?</button>
+          <button type="button">Ordena mis clientes por prioridad y dime por qué</button>
+          <button type="button">Redacta un email de seguimiento para el cliente más caliente</button>
+          <button type="button">¿Cómo va el mes y qué puedo hacer para cerrar más?</button>
+          <button type="button">Haz un presupuesto para un restaurante que quiere web corporativa con reservas y 4 reels al mes</button>
+        </div>
+      </div>
+    </div>
+    <form class="hv-in" id="hvForm">
+      <div class="hv-box"><textarea id="hvIn" rows="1" placeholder="Pídele algo a Harvey" aria-label="Mensaje para Harvey"></textarea>
+        <button class="hv-send" type="submit" id="hvSend" aria-label="Enviar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button></div>
+    </form>
+  </aside>

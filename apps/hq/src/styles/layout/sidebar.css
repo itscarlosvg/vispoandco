@@ -1,0 +1,17 @@
+/* sidebar */
+.side{position:sticky;top:0;height:100vh;height:100dvh;display:flex;flex-direction:column;gap:26px;padding:22px 16px 18px max(16px,env(safe-area-inset-left,0px));border-right:1px solid var(--line);background:var(--ink-2)}
+.side .logo{width:132px;height:auto;display:block;margin:4px 6px 0}
+.nav{display:grid;gap:3px}
+.nav button{display:flex;align-items:center;gap:12px;padding:10px 12px;border:0;border-radius:11px;background:transparent;color:var(--muted);font-weight:500;cursor:pointer;text-align:left;transition:background .2s,color .2s}
+.nav button svg{width:18px;height:18px;flex:none}
+.nav button:hover{color:var(--paper);background:rgba(245,242,236,.04)}
+.nav button[aria-current=page]{background:var(--panel-2);color:var(--paper)}
+.nav button[aria-current=page] svg{color:var(--acc-hi)}
+.nav .cnt{margin-left:auto;font:500 11px var(--f-mono);color:var(--muted);background:rgba(245,242,236,.06);padding:1px 7px;border-radius:6px}
+.nav .h-only{display:none}
+.side-foot{margin-top:auto;display:grid;gap:8px;font:500 11.5px var(--f-mono);color:var(--dim)}
+.sync{display:flex;align-items:center;gap:8px}
+.sync i{width:7px;height:7px;border-radius:50%;background:var(--dim)}
+.sync.on i{background:var(--ok);box-shadow:0 0 8px var(--ok)}
+.sync.err i{background:var(--bad)}
+

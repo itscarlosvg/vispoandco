@@ -1,0 +1,39 @@
+<title>Vispo HQ</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* @include styles/main.css */
+</style>
+
+<div class="app">
+<!-- @include partials/layout/sidebar.html -->
+
+  <main class="main">
+<!-- @include partials/layout/topbar.html -->
+    <div class="banner" id="exBanner" hidden><span>Estás viendo datos de ejemplo.</span><button class="btn sm ghost" type="button" id="clearEx" style="color:var(--warn)">Borrar ejemplos</button></div>
+    <div class="note" id="dbNote" hidden></div>
+
+<!-- @include partials/views/summary.html -->
+
+<!-- @include partials/views/pipeline.html -->
+
+<!-- @include partials/views/agenda.html -->
+
+<!-- @include partials/views/goals.html -->
+
+<!-- @include features/quotes/quotes.html -->
+<!-- @include partials/views/import.html -->
+  </main>
+
+<!-- @include features/harvey/harvey.html -->
+</div>
+
+<!-- @include partials/dialogs/lead.html -->
+
+<!-- @include features/quotes/company-dialog.html -->
+
+<script>
+// @include scripts/main.js
+</script>

@@ -1,0 +1,38 @@
+/* ai demo */
+#ia{scroll-margin-top:110px}
+.svc.ai{grid-column:span 12;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);align-items:center;background:radial-gradient(90% 120% at 100% 0%,rgba(232,51,111,.16),transparent 55%),var(--ink-2)}
+.ai-copy{display:grid;gap:20px;align-content:start}
+.ai-lead{color:var(--muted);font-size:16px;max-width:440px}
+.ai-stage{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:14px;min-width:0}
+.ai-chat{border-radius:20px;background:#F5F2EC;color:#111214;display:grid;grid-template-rows:auto minmax(0,1fr);height:440px;overflow:hidden}
+.ai-head{display:flex;gap:12px;align-items:center;padding:14px 16px;background:#fff;border-bottom:1px solid rgba(17,18,20,.08)}
+.ai-head b{font:600 15px var(--f-body);display:block}
+.ai-head small{font:400 12.5px var(--f-body);color:#5D5C64}
+.ai-av{width:36px;height:36px;border-radius:12px;background:#111214;color:var(--acc-hi);display:grid;place-items:center;flex:none}
+.ai-msgs{padding:16px 14px;display:flex;flex-direction:column;gap:8px;justify-content:flex-end;min-height:0;overflow:hidden;-webkit-mask-image:linear-gradient(transparent 0,#000 44px);mask-image:linear-gradient(transparent 0,#000 44px)}
+.ai-b,.ai-typing{flex:none}
+.ai-b{max-width:86%;padding:10px 14px;border-radius:16px;font:400 14px/1.45 var(--f-body);animation:aiIn .35s cubic-bezier(.2,.8,.2,1) both}
+.ai-b.u{align-self:flex-end;background:#111214;color:#F5F2EC;border-bottom-right-radius:5px}
+.ai-b.a{align-self:flex-start;background:#fff;border-bottom-left-radius:5px;box-shadow:0 1px 0 rgba(17,18,20,.06)}
+.ai-b.a::before{content:"IA";display:inline-block;font:600 10px var(--f-mono);color:#B3164F;background:#FFE0EA;padding:1px 6px;border-radius:5px;margin-right:6px;vertical-align:1px}
+.ai-b.rev{align-self:stretch;max-width:100%;background:#fff;border-radius:14px;box-shadow:inset 0 0 0 1px rgba(17,18,20,.1)}
+.ai-b.rev .st{color:#E8A317;letter-spacing:2px}
+.ai-typing{align-self:flex-start;background:#fff;border-radius:16px;padding:12px 14px;display:flex;gap:5px;animation:aiIn .3s both}
+.ai-typing i{width:7px;height:7px;border-radius:50%;background:#B3164F;animation:aiDot 1s infinite}
+.ai-typing i:nth-child(2){animation-delay:.15s}.ai-typing i:nth-child(3){animation-delay:.3s}
+@keyframes aiDot{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-3px)}}
+@keyframes aiIn{from{opacity:0;transform:translateY(10px) scale(.97)}}
+.ai-log{border-radius:20px;background:var(--panel);box-shadow:inset 0 0 0 1px var(--line);padding:16px;display:grid;grid-template-rows:auto minmax(0,1fr) auto;gap:12px;min-width:0;height:440px;overflow:hidden}
+.ai-log-h{display:flex;justify-content:space-between;align-items:center;font:500 12px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.ai-dot{width:9px;height:9px;border-radius:50%;background:#43D18A;box-shadow:0 0 10px #43D18A}
+.ai-dot.busy{background:var(--acc);box-shadow:0 0 12px var(--acc);animation:blink .6s steps(1) infinite}
+.ai-log ol{list-style:none;margin:0;padding:0;display:grid;gap:8px;align-content:start;counter-reset:s;min-height:0;overflow:hidden}
+.svc .ai-log li{display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px;align-items:start;font:400 13.5px/1.4 var(--f-body);color:#D9D6CF;animation:aiIn .35s both;padding:0;border-radius:0;background:none;box-shadow:none}
+.svc .ai-log li::before{counter-increment:s;content:counter(s);width:22px;height:22px;border-radius:7px;background:rgba(245,242,236,.06);display:grid;place-items:center;font:500 11px var(--f-mono);color:var(--muted)}
+.svc .ai-log li.ok::before{content:"✓";background:var(--acc);color:#111214}
+.ai-log li small{display:block;font:500 11.5px var(--f-mono);color:var(--muted);margin-top:2px}
+.ai-meter{display:flex;justify-content:space-between;align-items:baseline;border-top:1px dashed var(--line);padding-top:12px;font:500 12px var(--f-mono);color:var(--muted)}
+.ai-meter b{font:600 22px var(--f-display);color:var(--paper)}
+@media (max-width:1060px){.svc.ai{grid-template-columns:1fr}}
+@media (max-width:640px){.ai-stage{grid-template-columns:1fr}.ai-chat{height:400px}.ai-log{height:330px}}
+

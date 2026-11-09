@@ -1,0 +1,5 @@
+/* work: case cards */
+button.case{font:inherit;color:inherit;text-align:left;border:0;padding:0;cursor:pointer;width:100%}
+.case .shot{container-type:inline-size}
+.case:focus-visible{outline:2px solid var(--acc-hi);outline-offset:4px}
+.th{position:absolute;inset:0;overflow:hidden}

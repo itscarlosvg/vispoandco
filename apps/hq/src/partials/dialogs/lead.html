@@ -1,0 +1,28 @@
+<dialog id="leadDlg" aria-labelledby="ldT">
+  <form class="dlg" id="leadForm" novalidate>
+    <div class="dlg-h"><h2 id="ldT">Nuevo cliente</h2><button class="xbtn" type="button" id="ldClose" aria-label="Cerrar"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+    <div class="fg">
+      <div class="f"><label for="l-negocio">Negocio</label><input type="text" id="l-negocio" placeholder="Cafetería Lumen"></div>
+      <div class="f"><label for="l-nombre">Contacto</label><input type="text" id="l-nombre" placeholder="Laura Méndez"></div>
+      <div class="f"><label for="l-sector">Sector</label><select id="l-sector"></select></div>
+      <div class="f"><label for="l-ciudad">Ciudad</label><input type="text" id="l-ciudad" placeholder="Vigo"></div>
+      <div class="f"><label for="l-email">Email</label><input type="email" id="l-email" placeholder="laura@cafeterialumen.es"></div>
+      <div class="f"><label for="l-telefono">Teléfono</label><input type="tel" id="l-telefono" placeholder="600 000 000"></div>
+      <div class="f"><label for="l-web">Web o Instagram</label><input type="text" id="l-web" placeholder="cafeterialumen.es"></div>
+      <div class="f"><label for="l-fuente">Fuente</label><select id="l-fuente"></select></div>
+      <div class="f"><label for="l-etapa">Etapa</label><select id="l-etapa"></select></div>
+      <div class="f"><label for="l-proxima">Próxima acción</label><input type="date" id="l-proxima"></div>
+      <div class="f"><label for="l-valor">Valor (€)</label><input type="number" id="l-valor" min="0" step="10" inputmode="numeric" placeholder="1100"></div>
+      <div class="f"><label for="l-mensual">Cuota (€/mes)</label><input type="number" id="l-mensual" min="0" step="1" inputmode="numeric" placeholder="198"></div>
+      <div class="f full"><label for="l-servicios">Servicios</label><input type="text" id="l-servicios" placeholder="Web corporativa, reservas, SEO local, reels"></div>
+      <div class="f"><label for="l-reunion">Reunión</label><input type="datetime-local" id="l-reunion"></div>
+      <div class="f"><label for="l-formato">Formato</label><select id="l-formato"><option value="">—</option><option>Videollamada</option><option>Llamada telefónica</option><option>En persona</option></select></div>
+      <div class="f full"><label for="l-nota">Notas</label><textarea id="l-nota" rows="3" placeholder="Quiere tenerlo antes de Navidad."></textarea></div>
+    </div>
+    <p class="err" id="ldErr" role="alert"></p>
+    <div class="dlg-f">
+      <div class="l"><button class="btn sm danger" type="button" id="ldDel">Eliminar</button><span id="ldDelQ" hidden><span style="color:var(--bad);font-size:13px">¿Seguro?</span> <button class="btn sm danger" type="button" id="ldDelY">Sí, eliminar</button> <button class="btn sm ghost" type="button" id="ldDelN">No</button></span></div>
+      <div class="r"><button class="btn sm ghost" type="button" id="ldQuote">Presupuesto</button><button class="btn sm ghost" type="button" id="ldAsk">Pedir email a Harvey</button><button class="btn" type="submit" id="ldSave">Guardar</button></div>
+    </div>
+  </form>
+</dialog>

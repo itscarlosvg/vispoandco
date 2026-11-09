@@ -1,0 +1,8 @@
+    <section data-v="agenda" hidden>
+      <div class="grid two">
+        <div class="card"><div class="card-h"><h2>Reuniones</h2><span class="lbl" id="meetN"></span></div><ul class="list" id="meetings"></ul></div>
+        <div class="card"><div class="card-h"><h2>Recordatorios</h2><button class="btn sm ghost" type="button" id="showDone">Ver hechos</button></div>
+          <form class="addrow" id="taskForm"><input type="text" id="taskT" placeholder="Llamar a Lumen para cerrar la propuesta" aria-label="Nuevo recordatorio"><input type="date" id="taskD" aria-label="Fecha" style="flex:0 1 150px;width:auto"><input type="time" id="taskH" aria-label="Hora" style="flex:0 1 110px;width:auto"><select id="taskR" aria-label="Repetir" style="flex:0 1 150px;width:auto"><option value="">No se repite</option><option value="semanal">Cada semana</option><option value="mensual">Cada mes</option></select><button class="btn" type="submit">Añadir</button></form>
+          <ul class="list" id="tasks"></ul></div>
+      </div>
+    </section>
