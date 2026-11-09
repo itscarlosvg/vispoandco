@@ -15,5 +15,6 @@
 // @include scripts/ui/tilt.js
 // @include features/quote/quote.js
 // @include features/work/work.js
+// @include features/work/demos/clinica.js
 // @include scripts/ui/legal-dialog.js
 })();

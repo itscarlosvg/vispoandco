@@ -2,7 +2,7 @@
 // Builds both apps into dist/.
 //   node scripts/build.mjs            → web + hq
 //   node scripts/build.mjs web|hq     → one app
-import { readFileSync, writeFileSync, mkdirSync, copyFileSync, rmSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, copyFileSync, rmSync, existsSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
@@ -13,6 +13,7 @@ const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = join(ROOT, 'dist');
 const read = (p, enc = 'utf8') => readFileSync(join(ROOT, p), enc);
 const write = (p, text) => { const f = join(DIST, p); mkdirSync(dirname(f), { recursive: true }); writeFileSync(f, text); return f; };
+const has = (p) => existsSync(join(ROOT, p));
 const kb = (s) => `${(Buffer.byteLength(s) / 1024).toFixed(0)} KB`;
 
 function buildWeb() {
@@ -22,6 +23,9 @@ function buildWeb() {
     CALL_AUDIO: 'data:audio/mpeg;base64,' + read(`${src}/assets/audio/call.mp3`, null).toString('base64'),
     CALL_DATA: read(`${src}/assets/data/call-transcript.json`),
     CARTA_HTML: JSON.stringify(carta).replace(/<\//g, '<\\/'),
+    // Llamada de Clínica Sonríe: audio + tiempos de cada frase (opcionales; sin ellos la demo se reproduce simulada)
+    CLINIC_AUDIO: has(`${src}/assets/audio/clinica.mp3`) ? 'data:audio/mpeg;base64,' + read(`${src}/assets/audio/clinica.mp3`, null).toString('base64') : '',
+    CLINIC_TIMES: has(`${src}/assets/data/clinica-call.json`) ? read(`${src}/assets/data/clinica-call.json`).trim() : 'null',
     LOGO_LIGHT: brand.logo('logo'),
     LOGO_LIGHT_F: brand.logo('logo'),
     LOGO_MARK: brand.mark,

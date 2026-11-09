@@ -218,7 +218,10 @@ col=mix(col,sky(0.02,night)*1.03,exp(-abs(uv.y-horizon)*40.0)*0.32);col*=mix(1.0
       tabs:[['shop','Tienda online',vShop],['reels','Reels',vReels]],sector:'Tienda',preset:{web:'shop',webx:['seo'],reels:'8',vid:['spot'],mant:'pro'}},
     pulso:{eye:'Concepto · App de gimnasio',t:'Pulso Gym',p:'App para iOS y Android con la que los socios reservan clases, entran con su código QR y reciben avisos.',
       list:['Reserva de clases con plazas en tiempo real','Lista de espera que se reserva sola','Acceso al gimnasio con código QR','Avisos antes de cada clase'],
-      tabs:[['app','App de socios',vApp]],sector:'Gimnasio o deporte',preset:{web:'land',app:'users',appx:['push','stores'],mant:'pro'}}};
+      tabs:[['app','App de socios',vApp]],sector:'Gimnasio o deporte',preset:{web:'land',app:'users',appx:['push','stores'],mant:'pro'}},
+    clinica:{eye:'Concepto · Clínica dental',t:'Clínica Sonríe',p:'Una recepcionista con IA que atiende el teléfono las 24 horas, da citas en la agenda real de la clínica y se encarga de confirmaciones, recordatorios y reseñas.',
+      list:['Llamadas atendidas al momento, también fuera de horario','Citas creadas directamente en la agenda','Confirmación y recordatorio por WhatsApp','Petición de reseña en Google tras la visita','Web con cita online en un minuto'],
+      tabs:[['call','Llamada con IA',vCall],['flow','Automatización',vFlow],['web','Web',vClinic]],sector:'Salud o estética',preset:{web:'corp',webx:['res'],aia:['agenda','rev'],call:'inout',callx:['sys'],mant:'pro'}}};
   const csDlg=$('#caseDlg');let csKey=null,csStop=null,csState={};
   const caseState=k=>Object.assign({},DEF,{sector:CASES[k].sector,actual:'Empiezo de cero'},CASES[k].preset);
   function csTab(key){const C=CASES[csKey];const tab=C.tabs.find(t=>t[0]===key)||C.tabs[0];if(csStop){try{csStop();}catch(_){}}csStop=null;
