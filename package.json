@@ -14,7 +14,7 @@
     "build:web": "node scripts/build.mjs web",
     "build:hq": "node scripts/build.mjs hq",
     "dev": "node scripts/build.mjs && node scripts/serve.mjs",
-    "test": "node scripts/build.mjs web && node tests/e2e/quote-booking.test.mjs"
+    "test": "node scripts/build.mjs web && node tests/e2e/contact-booking.test.mjs"
   },
   "devDependencies": {
     "playwright": "^1.49.0"

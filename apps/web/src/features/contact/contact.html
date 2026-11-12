@@ -1,0 +1,46 @@
+  <section class="sec" id="contacto">
+    <div class="wrap">
+      <div class="contact" id="ctWrap">
+        <div class="aside">
+          <span class="eyebrow">Contacto</span>
+          <h2>Cuéntanos tu proyecto</h2>
+          <p>Entendemos tu negocio y te preparamos una propuesta a medida.</p>
+          <ul class="ct-pts">
+            <li><b>Reunión de 30 minutos por videollamada</b></li>
+            <li><b>Propuesta con precio cerrado</b></li>
+            <li><b>Sin compromiso</b></li>
+          </ul>
+          <a class="handle" href="https://instagram.com/vispoandco" target="_blank" rel="noopener">{{IG_ICON}}@vispoandco</a>
+        </div>
+        <form class="brief" id="ctForm" novalidate>
+          <div class="field"><span class="lbl" id="ct-l-svc">¿Qué necesitas?</span>
+            <div class="opts" role="group" aria-labelledby="ct-l-svc" id="ctSvc"></div></div>
+          <div class="field"><span class="lbl" id="ct-l-sec">Tu negocio</span>
+            <div class="opts" role="radiogroup" aria-labelledby="ct-l-sec" id="ctSec"></div></div>
+          <div class="field"><span class="lbl" id="ct-l-now">Ahora mismo</span>
+            <div class="opts" role="radiogroup" aria-labelledby="ct-l-now" id="ctNow"></div></div>
+          <div class="row2">
+            <div class="field"><label for="q-name">Nombre</label><input type="text" id="q-name" autocomplete="name" placeholder="Laura Méndez"></div>
+            <div class="field"><label for="q-biz">Negocio</label><input type="text" id="q-biz" autocomplete="organization" placeholder="Cafetería Lumen"></div>
+          </div>
+          <div class="row2">
+            <div class="field"><label for="q-mail">Email</label><input type="email" id="q-mail" autocomplete="email" inputmode="email" placeholder="laura@cafeterialumen.es"></div>
+            <div class="field"><label for="q-tel">Teléfono</label><input type="tel" id="q-tel" autocomplete="tel" inputmode="tel" placeholder="600 000 000"></div>
+          </div>
+          <div class="field"><label for="q-msg">Cuéntanos tu idea</label><textarea id="q-msg" placeholder="Quiero que mis clientes puedan reservar desde Instagram y ver la carta del día."></textarea></div>
+          <label class="ct-priv"><input type="checkbox" id="q-priv"><span>Acepto la <button type="button" data-legal="priv">política de privacidad</button></span></label>
+          <p class="err" id="qErr" role="alert"></p>
+          <button type="submit" class="btn ct-send" id="ctSend"><span>Enviar y elegir hora</span> <svg class="arr" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 10h12m-5-5 5 5-5 5"/></svg></button>
+        </form>
+      </div>
+      <div class="ct-done" id="ctDone" hidden>
+        <span class="eyebrow" id="qdEye">Solicitud enviada</span>
+        <h3 id="qdTitle"></h3>
+        <p id="qdText"></p>
+        <div class="cal-inline" id="calInline" hidden></div>
+        <div class="summary" id="qdSum"></div>
+        <div class="acts" id="qdActs"></div>
+        <p class="mono" id="copyMsg" style="color:var(--acc-hi);min-height:1em" role="status"></p>
+      </div>
+    </div>
+  </section>

@@ -26,8 +26,8 @@ Webs, apps multiplataforma, vídeo y automatización con IA para negocios.
 
 Repositorio de Vispo & Co. con dos aplicaciones:
 
-- **Web pública:** presenta los servicios, enseña proyectos con demos que se pueden usar, calcula un presupuesto orientativo al momento y deja reservar la reunión sin salir de la página.
-- **Vispo HQ:** panel interno con CRM, agenda, objetivos, presupuestos en PDF y Harvey, un asistente con IA que trabaja sobre los datos del panel.
+- **Web pública:** presenta los servicios, enseña proyectos con demos que se pueden usar y recoge solicitudes de contacto con reserva de reunión sin salir de la página.
+- **Vispo HQ:** panel interno con CRM, agenda, objetivos, calculadora de precios, presupuestos en PDF y Harvey, un asistente con IA que trabaja sobre los datos del panel.
 
 Está hecho a mano, sin frameworks: HTML, CSS y JavaScript modernos. Cada aplicación se publica como un único archivo HTML autocontenido. Node solo se usa para generarlo.
 
@@ -35,10 +35,11 @@ Está hecho a mano, sin frameworks: HTML, CSS y JavaScript modernos. Cada aplica
 
 | | |
 |---|---|
-| **Calculadora de presupuesto** | Siete pasos con precios «desde», cuota mensual y plazo en directo. Cada solicitud lleva una referencia y las correcciones se envían como nuevas versiones. |
+| **Contacto sin precios** | La web no publica tarifas: el cliente cuenta lo que necesita y reserva una reunión. Cada solicitud lleva una referencia y las correcciones se envían como nuevas versiones. |
 | **Reservas integradas** | Calendario propio sobre la API de Cal.com: horas libres, reserva y cambio de hora sin salir de la web. Si la API no responde, carga el calendario oficial de Cal.com. |
 | **Proyectos con demo** | Cada proyecto abre una versión que se puede usar: web de hotel con shader WebGL, tienda con carrito, app de reservas y recepcionista con IA. |
 | **Panel completo** | KPIs con comparativas, filtros, embudo, objetivos mensuales, recordatorios con repetición, exportación CSV y presupuestos formales en PDF. |
+| **Calculadora interna** | Precios de partida por servicio, cuota mensual, descuento por pack y plazo; crea el presupuesto con todas las líneas en un clic. |
 | **Asistente con IA** | Harvey consulta y modifica los datos del panel: clientes, tareas, objetivos y presupuestos. |
 | **Adaptable** | Diseñado desde 320 px hasta pantallas grandes; las demos usan container queries. |
 | **Accesible** | Navegación por teclado, foco visible y respeto de `prefers-reduced-motion`. |
@@ -66,7 +67,7 @@ npm run dev        # http://localhost:4173 · panel en /hq/
 | `npm run build:web` | Genera solo la web: sitio, zip para Netlify y versión de un solo archivo. |
 | `npm run build:hq` | Genera solo el panel. |
 | `npm run dev` | Genera `dist/` y lo sirve en http://localhost:4173 |
-| `npm test` | Genera la web y prueba el flujo presupuesto → reserva → cambio de hora → corrección. |
+| `npm test` | Genera la web y prueba el flujo solicitud → reserva → cambio de hora → corrección. |
 
 ## Estructura
 
@@ -91,7 +92,7 @@ apps/
 │       │   ├── demos/         Demos de web, app, vídeo, IA y llamada
 │       │   └── hero-3d.js     Escena 3D de la portada
 │       ├── features/
-│       │   ├── quote/         Calculadora, envío a Netlify y calendario de reservas
+│       │   ├── contact/       Formulario de contacto, envío a Netlify y calendario de reservas
 │       │   └── work/          Proyectos: tarjetas, diálogo y demos de cada caso
 │       └── assets/            Audio y transcripción de la llamada de ejemplo
 └── hq/
@@ -105,12 +106,13 @@ apps/
         │   ├── data/          Escrituras, tareas y exportación CSV
         │   └── views/         Resumen, clientes, agenda, objetivos e importación
         └── features/
+            ├── calculator/    Calculadora de precios que genera presupuestos
             ├── quotes/        Catálogo, editor, datos de empresa y PDF
             └── harvey/        Instrucciones, herramientas y chat del asistente
 packages/
 └── brand/                     Logo, iconos e ilustraciones como SVG
 scripts/                       Build, servidor local y composición
-tests/e2e/                     Flujo de presupuesto y reserva
+tests/e2e/                     Flujo de contacto y reserva
 docs/                          Arquitectura y marca
 ```
 
@@ -123,12 +125,13 @@ En cualquier archivo de `src/`:
 
 Más detalle en [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 
-## Presupuesto y reserva
+## Contacto y reserva
 
-1. La calculadora guarda las elecciones, calcula el precio y, al enviar, manda la solicitud a **Netlify Forms** con referencia (`P-XXXXXX`) y versión.
+1. El cliente elige qué necesita, su tipo de negocio y sus datos; la solicitud llega por **Netlify Forms** con referencia (`P-XXXXXX`) y versión.
 2. En el dominio propio aparece el calendario: pide a la **API de Cal.com** las horas libres del evento `vispoandco-lszwyh/meetings`.
-3. La reserva se crea con los datos y el resumen del presupuesto en las notas, y Cal.com la añade al calendario y envía la confirmación.
+3. La reserva se crea con la solicitud en las notas, y Cal.com la añade al calendario y envía la confirmación.
 4. Desde la misma pantalla se puede cambiar la hora (reprogramación de la misma reserva) o corregir los datos sin duplicar la reunión.
+5. El precio se prepara en la reunión con la calculadora del panel, que genera el presupuesto en PDF.
 
 ## Publicar en Netlify
 

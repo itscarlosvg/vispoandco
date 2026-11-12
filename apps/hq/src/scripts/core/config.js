@@ -21,4 +21,4 @@ const stName=k=>(STAGES.find(s=>s[0]===k)||[,k])[1];
 let db=null,LEADS=[],TASKS=[],QUOTES=[],loaded={l:false,t:false},showDone=false;
 
 /* ---------- views ---------- */
-const VIEWS={resumen:['Resumen',''],pipeline:['Clientes','Arrastra cada tarjeta a su etapa'],agenda:['Agenda',''],objetivos:['Objetivos',''],presupuestos:['Presupuestos',''],importar:['Importar',''],harvey:['Harvey','']};
+const VIEWS={resumen:['Resumen',''],pipeline:['Clientes','Arrastra cada tarjeta a su etapa'],agenda:['Agenda',''],objetivos:['Objetivos',''],calculadora:['Calculadora',''],presupuestos:['Presupuestos',''],importar:['Importar',''],harvey:['Harvey','']};

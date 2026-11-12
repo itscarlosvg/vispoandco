@@ -18,6 +18,7 @@
 // @include features/quotes/editor.js
 // @include features/quotes/company.js
 // @include features/quotes/pdf.js
+// @include features/calculator/calculator.js
 // @include features/harvey/prompt.js
 // @include features/harvey/tools.js
 // @include features/harvey/chat.js

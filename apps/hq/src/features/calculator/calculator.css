@@ -1,0 +1,51 @@
+/* calculadora */
+.cz{display:grid;grid-template-columns:minmax(0,1fr) 320px;grid-template-areas:"steps steps" "main sum";gap:14px;align-items:start}
+.cz-steps{grid-area:steps;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding:4px;border-radius:14px;background:var(--panel);box-shadow:inset 0 0 0 1px var(--line)}
+.cz-steps::-webkit-scrollbar{display:none}
+.cz-steps button{flex:1 0 auto;display:flex;align-items:center;justify-content:center;gap:8px;padding:9px 12px;border:0;border-radius:10px;background:transparent;color:var(--muted);cursor:pointer;white-space:nowrap;font-weight:500}
+.cz-steps button:hover{color:var(--paper)}
+.cz-steps i{font:500 10.5px var(--f-mono);font-style:normal;width:20px;height:20px;border-radius:6px;display:grid;place-items:center;background:rgba(245,242,236,.07)}
+.cz-steps button.has i{background:var(--acc-soft);color:var(--acc-hi)}
+.cz-steps button[aria-current=step]{background:var(--panel-2);color:var(--paper)}
+.cz-steps button[aria-current=step] i{background:var(--acc);color:var(--ink)}
+.cz-main{grid-area:main;display:grid;gap:20px;min-width:0}
+.cz-pane{display:grid;gap:22px}
+.cz-g{display:grid;gap:10px;transition:opacity .25s}
+.cz-g.off{opacity:.3;pointer-events:none}
+.cz-g>.lbl{font:500 11.5px var(--f-mono);letter-spacing:.06em;color:var(--muted);text-transform:uppercase}
+.cz-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px}
+.cz-c,.cz-o{position:relative}
+.cz-c input,.cz-o input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.cz-c span{display:grid;grid-template-rows:auto 1fr auto;gap:4px;height:100%;padding:13px;border-radius:12px;box-shadow:inset 0 0 0 1px var(--line);cursor:pointer;transition:background .2s,box-shadow .2s}
+.cz-c b{font:600 15px var(--f-display)}
+.cz-c small{color:var(--muted);font-size:12.5px;line-height:1.35}
+.cz-c em,.cz-o em{font:500 11.5px var(--f-mono);font-style:normal;color:var(--muted)}
+.cz-c em{padding-top:6px}
+.cz-opts{display:flex;flex-wrap:wrap;gap:6px}
+.cz-o span{display:inline-flex;flex-wrap:wrap;align-items:center;gap:4px 8px;padding:8px 12px;border-radius:10px;box-shadow:inset 0 0 0 1px var(--line);color:var(--soft);cursor:pointer;transition:background .2s,box-shadow .2s}
+.cz-c:hover span,.cz-o:hover span{box-shadow:inset 0 0 0 1px var(--line-2)}
+.cz-c input:checked+span,.cz-o input:checked+span{background:var(--acc-soft);box-shadow:inset 0 0 0 1.5px var(--acc);color:var(--paper)}
+.cz-c input:checked+span em,.cz-o input:checked+span em{color:var(--acc-hi)}
+.cz-c input:focus-visible+span,.cz-o input:focus-visible+span{outline:2px solid var(--acc-hi);outline-offset:2px}
+.cz-nav{display:flex;justify-content:space-between;border-top:1px dashed var(--line);padding-top:16px}
+.cz-nav .btn[disabled]{visibility:hidden}
+.cz-sum{grid-area:sum;position:sticky;top:16px;display:grid;gap:14px;min-width:0}
+.cz-tot{display:grid;gap:2px}
+.cz-tot b{font:700 40px/1 var(--f-display);letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.cz-tot>span:last-child{font:600 15px var(--f-display);color:var(--acc-hi);min-height:1.3em}
+#czLines{list-style:none;margin:0;padding:12px 0;border-block:1px dashed var(--line);display:grid;gap:7px;max-height:340px;overflow:auto;font-size:13px}
+#czLines li{display:flex;justify-content:space-between;gap:12px;color:var(--soft)}
+#czLines li span:last-child{font:500 12px var(--f-mono);color:var(--muted);white-space:nowrap}
+#czLines li.disc span:last-child{color:var(--ok)}
+#czLines li.empty{color:var(--muted)}
+.cz-meta{display:flex;justify-content:space-between;font:500 12px var(--f-mono);color:var(--muted)}
+.cz-meta b{color:var(--paper);font-weight:500}
+.cz-sum .btn{justify-content:center}
+.cz-sum .btn[disabled]{opacity:.4;pointer-events:none}
+@media (max-width:1100px){
+  .cz{grid-template-columns:minmax(0,1fr);grid-template-areas:"steps" "main" "sum"}
+  .cz-sum{position:static}
+}
+@media (max-width:640px){
+  .cz-cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+}

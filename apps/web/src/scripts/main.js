@@ -13,7 +13,7 @@
 // @include scripts/demos/ai.js
 // @include scripts/demos/call.js
 // @include scripts/ui/tilt.js
-// @include features/quote/quote.js
+// @include features/contact/contact.js
 // @include features/work/work.js
 // @include features/work/demos/clinica.js
 // @include scripts/ui/legal-dialog.js

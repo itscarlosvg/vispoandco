@@ -16,3 +16,5 @@
 .plan:not(.hi) .btn{background:var(--ink);color:var(--paper)}
 .plan:not(.hi) .btn:hover{background:#26262c}
 
+.plan{grid-template-rows:auto auto 1fr auto}
+.plan ul{align-self:start}

@@ -1,4 +1,4 @@
-// E2E: presupuesto → calendario propio → reserva → cambio de hora → corrección.
+// E2E: solicitud de contacto → calendario propio → reserva → cambio de hora → corrección.
 // Cal.com y Netlify se simulan; no sale ninguna petición real.
 import { chromium } from 'playwright';
 import { readFileSync } from 'node:fs';
@@ -39,12 +39,15 @@ try {
 
     await page.goto(ORIGIN);
     await page.locator('#contacto').scrollIntoViewIfNeeded();
-    for (let i = 0; i < 8 && !(await page.locator('[data-pane=cita]').isVisible()); i++) await page.click('#qzNext');
+    await page.click('#ctSend');
+    assert.match(await page.locator('#qErr').textContent(), /opción/, 'pide un servicio');
+    await page.locator('#ctSvc .opt').first().click();
+    await page.locator('#ctSec .opt').nth(3).click();
     await page.fill('#q-name', 'Laura');
     await page.fill('#q-biz', 'Lumen');
     await page.fill('#q-mail', 'laura@lumen.es');
     await page.check('#q-priv');
-    await page.click('#qzNext');
+    await page.click('#ctSend');
 
     await page.locator('.nct').nth(2).click();
     await page.click('#ncGo');
@@ -58,7 +61,7 @@ try {
 
     await page.locator('#qdActs .btn').last().click();
     await page.fill('#q-biz', 'Lumen Café');
-    await page.click('#qzNext');
+    await page.click('#ctSend');
     await page.locator('#ncMove').waitFor();
 
     assert.deepEqual(calls, ['form', 'booking', 'reschedule', 'form'], `flujo ${width}px`);

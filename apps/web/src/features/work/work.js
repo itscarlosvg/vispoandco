@@ -212,29 +212,27 @@ col=mix(col,sky(0.02,night)*1.03,exp(-abs(uv.y-horizon)*40.0)*0.32);col*=mix(1.0
   const CASES={
     castro:{eye:'Proyecto real · En desarrollo',wip:true,t:'Hotel O Castro',p:'Web para un hotel familiar frente a la Ría de Arousa y su restaurante, cada uno con identidad propia, y una carta digital que el restaurante cambia cada día.',
       list:['Web del hotel con la ría al atardecer generada en 3D, en tiempo real','Restaurante como marca propia: Mar e Horta','Calendario interactivo de lo que da la huerta cada mes','Carta QR editable desde el móvil, con alérgenos y PDF','Reserva directa, sin intermediarios'],
-      ext:'https://hotel-o-castro-preview.netlify.app',tabs:[['web','Web del hotel',vHotel],['resto','Restaurante',vResto],['carta','Carta QR',vCarta]],sector:'Hotel o alojamiento',preset:{web:'corp',webx:['qr','p3d'],mant:'basic'}},
+      ext:'https://hotel-o-castro-preview.netlify.app',tabs:[['web','Web del hotel',vHotel],['resto','Restaurante',vResto],['carta','Carta QR',vCarta]],svc:['web']},
     atelier:{eye:'Concepto · Tienda de moda',t:'Atelier Nube',p:'Tienda online para una marca de ropa de mujer: catálogo por colecciones, bolsa de compra y pago en pocos pasos, más reels cada mes para Instagram.',
       list:['Catálogo con filtros, tallas y vista rápida','Bolsa con aviso de envío gratis','Pago con tarjeta, Bizum y Apple Pay','Reels de colección, looks y taller'],
-      tabs:[['shop','Tienda online',vShop],['reels','Reels',vReels]],sector:'Tienda',preset:{web:'shop',webx:['seo'],reels:'8',vid:['spot'],mant:'pro'}},
+      tabs:[['shop','Tienda online',vShop],['reels','Reels',vReels]],svc:['shop','vid']},
     pulso:{eye:'Concepto · App de gimnasio',t:'Pulso Gym',p:'App para iOS y Android con la que los socios reservan clases, entran con su código QR y reciben avisos.',
       list:['Reserva de clases con plazas en tiempo real','Lista de espera que se reserva sola','Acceso al gimnasio con código QR','Avisos antes de cada clase'],
-      tabs:[['app','App de socios',vApp]],sector:'Gimnasio o deporte',preset:{web:'land',app:'users',appx:['push','stores'],mant:'pro'}},
+      tabs:[['app','App de socios',vApp]],svc:['app','web']},
     clinica:{eye:'Concepto · Clínica dental',t:'Clínica Sonríe',p:'Una recepcionista con IA que atiende el teléfono las 24 horas, da citas en la agenda real de la clínica y se encarga de confirmaciones, recordatorios y reseñas.',
       list:['Llamadas atendidas al momento, también fuera de horario','Citas creadas directamente en la agenda','Confirmación y recordatorio por WhatsApp','Petición de reseña en Google tras la visita','Web con cita online en un minuto'],
-      tabs:[['call','Llamada con IA',vCall],['flow','Automatización',vFlow],['web','Web',vClinic]],sector:'Salud o estética',preset:{web:'corp',webx:['res'],aia:['agenda','rev'],call:'inout',callx:['sys'],mant:'pro'}}};
+      tabs:[['call','Llamada con IA',vCall],['flow','Automatización',vFlow],['web','Web',vClinic]],svc:['call','auto','web']}};
   const csDlg=$('#caseDlg');let csKey=null,csStop=null,csState={};
-  const caseState=k=>Object.assign({},DEF,{sector:CASES[k].sector,actual:'Empiezo de cero'},CASES[k].preset);
   function csTab(key){const C=CASES[csKey];const tab=C.tabs.find(t=>t[0]===key)||C.tabs[0];if(csStop){try{csStop();}catch(_){}}csStop=null;
     $$('#csTabs button').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.k===tab[0])));
     const v=$('#csView');v.innerHTML='';csStop=tab[2](v,{tab:csTab,state:csState});}
   function openCase(k){csKey=k;csState={};const C=CASES[k];
     $('#csEye').textContent=C.eye;$('#csT').textContent=C.t;$('#csP').textContent=C.p;$('#csList').innerHTML=C.list.map(x=>`<li>${x}</li>`).join('');const ex=$('#csExt');ex.hidden=!C.ext;if(C.ext)ex.href=C.ext;$('#csNote').hidden=!C.wip;if(C.ext)$('#csNoteA').href=C.ext;$('.cs-stage').classList.toggle('has-note',!!C.wip);
-    const R=calc(caseState(k));$('#csPrice').textContent='Desde '+eur(R.one);$('#csMo').textContent=R.mo?'+ '+eur(R.mo)+'/mes':'';
     $('#csTabs').innerHTML=C.tabs.map(t=>`<button type="button" role="tab" data-k="${t[0]}">${t[1]}</button>`).join('');$('#csTabs').hidden=C.tabs.length<2;
     csDlg.showModal();csTab(C.tabs[0][0]);}
   $('#csTabs').addEventListener('click',e=>{const b=e.target.closest('[data-k]');if(b)csTab(b.dataset.k);});
   csDlg.addEventListener('close',()=>{if(csStop){try{csStop();}catch(_){}}csStop=null;$('#csView').innerHTML='';});
   $('#csClose').addEventListener('click',()=>csDlg.close());
-  $('#csCta').addEventListener('click',()=>{const k=csKey;csDlg.close();writeState(caseState(k));update();go(1);setTimeout(()=>$('#contacto').scrollIntoView({behavior:RM?'auto':'smooth'}),60);});
+  $('#csCta').addEventListener('click',()=>{const C=CASES[csKey];csDlg.close();contactPrefill(C.svc,`Me interesa un proyecto como ${C.t}.`);});
   $$('[data-case]').forEach(b=>b.addEventListener('click',()=>openCase(b.dataset.case)));
 

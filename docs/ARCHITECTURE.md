@@ -11,7 +11,7 @@ apps/
     styles/               main.css (índice) → base, layout/, components/, sections/, demos/, responsive
     scripts/              main.js (índice) → ui/, demos/ · hero-3d.js (three.js, módulo)
     features/
-      quote/              Calculadora, envío a Netlify Forms y calendario propio (Cal.com)
+      contact/            Formulario de contacto, envío a Netlify Forms y calendario propio (Cal.com)
       work/               Proyectos: tarjetas, diálogo, mini webs de demo, datos (carta)
     assets/               Audio y datos de la demo de llamada
   web/public/             Archivos estáticos (favicon)
@@ -21,11 +21,12 @@ apps/
     styles/               base, layout/, components/, views/, responsive
     scripts/              core/ (config, router, avisos) · analytics/ · data/ · views/
     features/
+      calculator/         Calculadora de precios de partida → crea presupuestos
       quotes/             Modelo, lista, editor, empresa, PDF (pdf-lib)
       harvey/             Prompt, herramientas y chat del asistente
 packages/brand/           Logo, marca, iconos e ilustraciones como SVG
 scripts/                  build.mjs · serve.mjs · lib/compose.mjs
-tests/e2e/                Flujo presupuesto → reserva → cambio de hora → corrección
+tests/e2e/                Flujo solicitud → reserva → cambio de hora → corrección
 ```
 
 ## Convenciones
