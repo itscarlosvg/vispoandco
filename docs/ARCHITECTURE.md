@@ -24,7 +24,7 @@ apps/
       quotes/             Modelo, lista, editor, empresa, PDF (pdf-lib)
       harvey/             Prompt, herramientas y chat del asistente
 packages/brand/           Logo, marca, iconos e ilustraciones como SVG
-scripts/                  build.mjs · lib/compose.mjs
+scripts/                  build.mjs · serve.mjs · lib/compose.mjs
 tests/e2e/                Flujo presupuesto → reserva → cambio de hora → corrección
 ```
 
