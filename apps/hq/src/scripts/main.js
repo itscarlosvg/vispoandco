@@ -1,5 +1,6 @@
 (()=>{
 // @include scripts/core/config.js
+// @include scripts/core/store.js
 // @include scripts/core/router.js
 // @include scripts/analytics/metrics.js
 // @include scripts/views/summary.js

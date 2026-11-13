@@ -16,6 +16,7 @@ Webs, apps multiplataforma, vídeo y automatización con IA para negocios.
 ![Three.js](https://img.shields.io/badge/Three.js-000000?style=for-the-badge&logo=threedotjs&logoColor=white)
 ![Node.js](https://img.shields.io/badge/Node.js-5FA04E?style=for-the-badge&logo=nodedotjs&logoColor=white)
 ![Netlify](https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-3FCF8E?style=for-the-badge&logo=supabase&logoColor=white)
 ![Licencia](https://img.shields.io/badge/licencia-todos%20los%20derechos%20reservados-ff3d6e?style=for-the-badge)
 
 </div>
@@ -40,6 +41,8 @@ Está hecho a mano, sin frameworks: HTML, CSS y JavaScript modernos. Cada aplica
 | **Proyectos con demo** | Cada proyecto abre una versión que se puede usar: web de hotel con shader WebGL, tienda con carrito, app de reservas y recepcionista con IA. |
 | **Panel completo** | KPIs con comparativas, filtros, embudo, objetivos mensuales, recordatorios con repetición, exportación CSV y presupuestos formales en PDF. |
 | **Calculadora interna** | Precios de partida por servicio, cuota mensual, descuento por pack y plazo; crea el presupuesto con todas las líneas en un clic. |
+| **Un panel, dos accesos** | El mismo panel en `/admin` (con login) y en Claude (con Harvey), sobre una única base de datos en Supabase: lo que cambias en uno aparece en el otro. |
+| **CRM automático** | Cada solicitud de la web y cada reunión reservada entran solas en Clientes y Agenda. |
 | **Asistente con IA** | Harvey consulta y modifica los datos del panel: clientes, tareas, objetivos y presupuestos. |
 | **Adaptable** | Diseñado desde 320 px hasta pantallas grandes; las demos usan container queries. |
 | **Accesible** | Navegación por teclado, foco visible y respeto de `prefers-reduced-motion`. |
@@ -50,7 +53,8 @@ Está hecho a mano, sin frameworks: HTML, CSS y JavaScript modernos. Cada aplica
 - **Frontend:** HTML5, CSS moderno (variables, container queries, `cqw`) y JavaScript sin dependencias.
 - **Gráficos:** Three.js para la escena 3D de la portada y WebGL para el shader de la ría.
 - **Servicios:** Netlify Forms (solicitudes por correo) y API v2 de Cal.com (disponibilidad y reservas).
-- **Panel:** base de datos y asistente de los artifacts de Claude; pdf-lib para los PDF.
+- **Datos:** Supabase (Postgres con RLS, autenticación y tiempo real). En Claude, el panel accede con el conector de Supabase.
+- **Panel:** asistente de los artifacts de Claude; pdf-lib para los PDF.
 - **Herramientas:** Node 20+ para el build, el servidor local y los tests con Playwright.
 
 ## Empezar
@@ -63,7 +67,7 @@ npm run dev        # http://localhost:4173 · panel en /hq/
 
 | Comando | Qué hace |
 |---|---|
-| `npm run build` | Genera `dist/` con la web y el panel. |
+| `npm run build` | Genera `dist/` con la web, `/admin` y el panel para Claude. |
 | `npm run build:web` | Genera solo la web: sitio, zip para Netlify y versión de un solo archivo. |
 | `npm run build:hq` | Genera solo el panel. |
 | `npm run dev` | Genera `dist/` y lo sirve en http://localhost:4173 |
@@ -101,7 +105,7 @@ apps/
         ├── partials/          layout/, views/, dialogs/
         ├── styles/            base, layout/, components/, views/
         ├── scripts/
-        │   ├── core/          Configuración, navegación y avisos
+        │   ├── core/          Configuración, datos (store: Supabase), navegación y avisos
         │   ├── analytics/     Periodos, métricas y objetivos
         │   ├── data/          Escrituras, tareas y exportación CSV
         │   └── views/         Resumen, clientes, agenda, objetivos e importación
@@ -111,6 +115,7 @@ apps/
             └── harvey/        Instrucciones, herramientas y chat del asistente
 packages/
 └── brand/                     Logo, iconos e ilustraciones como SVG
+config/                        Proyecto y claves públicas de Supabase
 scripts/                       Build, servidor local y composición
 tests/e2e/                     Flujo de contacto y reserva
 docs/                          Arquitectura y marca
@@ -133,9 +138,15 @@ Más detalle en [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 4. Desde la misma pantalla se puede cambiar la hora (reprogramación de la misma reserva) o corregir los datos sin duplicar la reunión.
 5. El precio se prepara en la reunión con la calculadora del panel, que genera el presupuesto en PDF.
 
+## Datos y acceso al panel
+
+- Todo el panel vive en la tabla `docs` de Supabase (colección, id y datos JSON), protegida con RLS: solo los usuarios de `admins` pueden leer o escribir.
+- La web solo puede llamar a `web_lead`, que crea o actualiza el cliente de una solicitud por su referencia.
+- `/admin` usa la sesión de Supabase y recibe los cambios en tiempo real; el panel de Claude lee y escribe con el conector de Supabase.
+
 ## Publicar en Netlify
 
-**Con Git (recomendado):** conecta el repositorio en Netlify. `netlify.toml` ya define el build (`npm run build:web`) y la carpeta publicada (`dist/web/site`).
+**Con Git (activo):** cada push a `main` publica la web y `/admin`. `netlify.toml` define el build (`npm run build:web`) y la carpeta publicada (`dist/web/site`).
 
 **Sin Git:**
 

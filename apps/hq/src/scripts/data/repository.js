@@ -14,8 +14,8 @@ async function createTask(o){const lead=o.leadId?LEADS.find(l=>l.id===o.leadId):
 render();
 (async()=>{
   const sync=$('#sync'),syncT=$('#syncT');
-  try{db=await window.claude?.use?.('db');}catch(_){db=null;}
-  if(!db){sync.className='sync err';syncT.textContent='Sin conexión a datos';showNote('Los datos no están disponibles en esta vista. Abre el panel desde tu cuenta de Claude.');$('#newLead').disabled=true;return;}
+  try{db=await openStore();}catch(_){db=null;}
+  if(!db){sync.className='sync err';syncT.textContent='Sin conexión a datos';showNote(HQ_BACKEND?'No se ha podido conectar con la base de datos. Recarga la página.':'Conecta Supabase en los conectores de Claude para ver tus datos.');$('#newLead').disabled=true;return;}
   const timer=setTimeout(()=>{if(!loaded.l){syncT.textContent='Tardando en cargar…';}},10000);
   const fail=e=>{sync.className='sync err';syncT.textContent='Sin conexión';showNote(e&&e.code==='revoked'?'Ya no tienes acceso a estos datos.':'Se ha perdido la conexión con los datos. Recarga la página.');};
   db.collection('leads').onSnapshot(s=>{LEADS=s.docs.map(d=>Object.assign({id:d.id},d.data()));if(!s.metadata.fromCache){loaded.l=true;clearTimeout(timer);sync.className='sync on';syncT.textContent='Sincronizado';lastSync=new Date();}render();},fail);

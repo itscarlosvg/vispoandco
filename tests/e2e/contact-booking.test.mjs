@@ -24,11 +24,12 @@ const browser = await chromium.launch();
 try {
   for (const [width, height] of [[1280, 900], [390, 844]]) {
     const page = await browser.newPage({ viewport: { width, height } });
-    const calls = [], errors = [];
+    const calls = [], errors = [], crm = [];
     page.on('pageerror', (e) => errors.push(e.message));
     await page.route('**/*', (route) => {
       const req = route.request(), url = req.url();
       if (req.method() === 'OPTIONS') return route.fulfill({ status: 204, headers: CORS });
+      if (url.includes('/rest/v1/rpc/web_lead')) { crm.push(JSON.parse(req.postData()).p); return route.fulfill({ status: 204, headers: CORS }); }
       if (url === ORIGIN && req.method() === 'POST') { calls.push('form'); return route.fulfill({ status: 200, body: 'ok' }); }
       if (url === ORIGIN) return route.fulfill({ body: SITE, contentType: 'text/html' });
       if (url.includes('api.cal.com/v2/slots')) return route.fulfill({ headers: CORS, contentType: 'application/json', body: JSON.stringify({ status: 'success', data: slots() }) });
@@ -65,6 +66,10 @@ try {
     await page.locator('#ncMove').waitFor();
 
     assert.deepEqual(calls, ['form', 'booking', 'reschedule', 'form'], `flujo ${width}px`);
+    await page.waitForTimeout(300);
+    assert.equal(crm.filter((x) => x.negocio).length, 2, `solicitudes al CRM ${width}px`);
+    assert.equal(crm.filter((x) => x.reunion).length, 2, `reuniones al CRM ${width}px`);
+    assert.ok(crm.every((x) => /^P-[A-Z0-9]+$/.test(x.ref)) && new Set(crm.map((x) => x.ref)).size === 1, `misma referencia ${width}px`);
     assert.deepEqual(errors, [], `errores JS ${width}px`);
     console.log(`✓ ${width}px`);
     await page.close();

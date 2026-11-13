@@ -1,0 +1,16 @@
+/* panel web (/admin): acceso y modo sin Harvey */
+.login{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:20px;background:radial-gradient(80% 60% at 50% 0%,rgba(232,51,111,.16),transparent 70%),var(--ink)}
+.lg-card{width:min(380px,100%);display:grid;gap:14px;padding:30px 26px;border-radius:22px;background:var(--panel);box-shadow:inset 0 0 0 1px var(--line),0 30px 80px rgba(0,0,0,.5)}
+.lg-logo{display:flex;justify-content:center;margin-bottom:10px}
+.lg-logo .logo{width:150px;height:auto}
+.lg-card .btn{justify-content:center;height:46px}
+.lg-new{border:0;background:none;color:var(--muted);font-size:13px;cursor:pointer;text-decoration:underline;justify-self:center}
+.lg-new:hover{color:var(--paper)}
+body.locked .app{visibility:hidden}
+.link-out{margin-top:10px;border:0;background:none;padding:0;color:var(--muted);font:500 12px var(--f-mono);cursor:pointer;text-align:left}
+.link-out:hover{color:var(--paper)}
+html.web .app{grid-template-columns:232px minmax(0,1fr)}
+html.web .harvey,html.web .nav .h-only,html.web #impRead{display:none!important}
+@media (max-width:1280px){html.web .app{grid-template-columns:212px minmax(0,1fr)}}
+@media (max-width:760px){html.web .app{grid-template-columns:minmax(0,1fr)}}
+html.web [data-v=importar] > .card:first-child,html.web [data-v=importar] .card:has(#impRead){display:none!important}

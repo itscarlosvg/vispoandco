@@ -22,6 +22,11 @@
   $$('[data-plan]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();contactPrefill(PLANS[a.dataset.plan]||[],`Me interesa el plan ${a.dataset.plan}.`);}));
 
   const CAL='https://cal.com/vispoandco-lszwyh/meetings';
+  // CRM: cada solicitud y reunión entra en el panel (Supabase) por la función pública web_lead
+  const SB_URL='{{SB_URL}}',SB_KEY='{{SB_KEY}}';
+  const isOwn=()=>/^https?:$/.test(location.protocol)&&!/claude|anthropic|usercontent|localhost|127\.0\.0\.1/.test(location.hostname);
+  const madrid=iso=>new Intl.DateTimeFormat('sv-SE',{timeZone:'Europe/Madrid',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date(iso)).replace(' ','T');
+  function toCRM(p){if(!isOwn())return;fetch(SB_URL+'/rest/v1/rpc/web_lead',{method:'POST',keepalive:true,headers:{'Content-Type':'application/json',apikey:SB_KEY,Authorization:'Bearer '+SB_KEY},body:JSON.stringify({p})}).catch(()=>{});}
   function embedCal(pre,fallback){const box=$('#calInline');box.hidden=false;box.innerHTML='';
     try{(function(C,A,L){let p=function(a,ar){a.q.push(ar);};let d=C.document;C.Cal=C.Cal||function(){let cal=C.Cal;let ar=arguments;if(!cal.loaded){cal.ns={};cal.q=cal.q||[];d.head.appendChild(d.createElement("script")).src=A;cal.loaded=true;}if(ar[0]===L){const api=function(){p(api,arguments);};const namespace=ar[1];api.q=api.q||[];if(typeof namespace==="string"){cal.ns[namespace]=cal.ns[namespace]||api;p(cal.ns[namespace],ar);p(cal,["initNamespace",namespace]);}else p(cal,ar);return;}p(cal,ar);};})(window,"https://app.cal.com/embed/embed.js","init");
       if(!window.__calInit){Cal("init","vispo",{origin:"https://app.cal.com"});window.__calInit=1;
@@ -72,7 +77,7 @@
             ?await fetch(`${CAL_API}/bookings/${encodeURIComponent(bookUid)}/reschedule`,{method:'POST',headers:{'Content-Type':'application/json','cal-api-version':'2026-02-25'},body:JSON.stringify({start,rescheduledBy:pre.email,reschedulingReason:'Cambio de hora desde la web'})})
             :await fetch(`${CAL_API}/bookings`,{method:'POST',headers:{'Content-Type':'application/json','cal-api-version':'2026-02-25'},body:JSON.stringify({start,eventTypeSlug:CAL_EV,username:CAL_USER,attendee:{name:pre.name,email:pre.email,timeZone:tz,language:'es'},bookingFieldsResponses:{notes:pre.notes}})});
           const j=await r.json().catch(()=>({}));if(!r.ok||j.status!=='success')throw j;
-          const moved=!!bookUid;bookUid=(j.data&&j.data.uid)||bookUid;bookStart=pick;done();
+          const moved=!!bookUid;bookUid=(j.data&&j.data.uid)||bookUid;bookStart=pick;done();toCRM({ref:qRef,reunion:madrid(pick),calUid:bookUid||''});
           head(moved?'Hora cambiada':'Reunión reservada',moved?'Reunión actualizada':'¡Hecho! Nos vemos en la reunión',`Te hemos enviado la confirmación a ${pre.email} con el enlace de la videollamada.`);}
         catch(_){err.textContent='Esa hora ya no está disponible. Elige otra.';delete go.dataset.busy;go.firstChild.textContent=lbl;
           try{slots=await getSlots();draw();}catch(_){}}});
@@ -95,7 +100,8 @@
     const txt=[`Negocio: ${biz}${sector?' ('+sector+')':''}`].concat(now?[`Situación: ${now}`]:[]).concat(['','Necesita: '+svc.join(', ')]).concat(msg?['',msg]:[]).join('\n');
     const data={'form-name':'presupuesto','bot-field':'',subject:(qSent>1?'Corrección de solicitud · ':'Nueva solicitud · ')+biz+' · '+qRef,referencia:qRef+(qSent>1?' (versión '+qSent+', sustituye a la anterior)':''),
       nombre:name,negocio:biz,email:mail,telefono:tel,sector,situacion:now,reunion:'Cal.com',formato:'Videollamada',servicios:svc.join(', '),comentarios:msg};
-    const own=/^https?:$/.test(location.protocol)&&!/claude|anthropic|usercontent|localhost|127\.0\.0\.1/.test(location.hostname);
+    const own=isOwn();
+    toCRM({ref:qRef,nombre:name,negocio:biz,email:mail,telefono:tel,sector,servicios:svc.join(', '),nota:[now?'Situación: '+now:'',msg].filter(Boolean).join('\n')});
     const send=$('#ctSend span');sending=true;send.textContent='Enviando…';
     let ok=false;
     if(own){try{const r=await fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(data).toString()});ok=r.ok;}catch(_){ok=false;}}
