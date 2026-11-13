@@ -14,13 +14,14 @@ function tdToast(t){let n=$('#tdToast');if(!n){n=document.createElement('div');n
   n.textContent=t;n.classList.add('show');clearTimeout(n._t);n._t=setTimeout(()=>n.classList.remove('show'),1800);}
 function tdPos(x,y){const g=TD.ghost;g.style.left=(x-TD.dx)+'px';g.style.top=(y-TD.dy)+'px';}
 function tdStart(){const c=TD.card,r=c.getBoundingClientRect();TD.on=true;
-  const tabs=$('#plTabs'),ph=document.createElement('div');ph.id='plTabsPh';ph.style.height=tabs.offsetHeight+'px';tabs.before(ph);tabs.classList.add('float');
+  const tabs=$('#plTabs'),hb=document.querySelector('.side').getBoundingClientRect().bottom,tr=tabs.getBoundingClientRect();
+  if(tr.top<hb){const ph=document.createElement('div');ph.id='plTabsPh';ph.style.height=tabs.offsetHeight+'px';tabs.before(ph);tabs.style.top=(hb+8)+'px';tabs.classList.add('float');}
   const g=c.cloneNode(true);g.className='lc td-ghost';g.style.width=r.width+'px';g.style.left=r.left+'px';g.style.top=r.top+'px';document.body.appendChild(g);
   TD.ghost=g;TD.dx=TD.x0-r.left;TD.dy=TD.y0-r.top;tdPos(TD.x0,TD.y0);c.classList.add('td-src');document.body.classList.add('td-on');}
 function tdEnd(drop){clearTimeout(TD.timer);if(!TD.on){TD.card=null;return;}
   const st=TD.over&&TD.over.dataset.st,id=TD.id;
   TD.ghost&&TD.ghost.remove();TD.card&&TD.card.classList.remove('td-src');$$('#plTabs .td-over').forEach(b=>b.classList.remove('td-over'));
-  const tabs=$('#plTabs');tabs.classList.remove('float');$('#plTabsPh')&&$('#plTabsPh').remove();document.body.classList.remove('td-on');
+  const tabs=$('#plTabs');tabs.classList.remove('float');tabs.style.top='';$('#plTabsPh')&&$('#plTabsPh').remove();document.body.classList.remove('td-on');
   Object.assign(TD,{on:false,ghost:null,card:null,over:null});TD.justDropped=true;setTimeout(()=>TD.justDropped=false,350);
   if(!drop||!st)return;const l=LEADS.find(x=>x.id===id);if(!l||l.etapa===st)return;
   const name=(STAGES.find(s=>s[0]===st)||[,st])[1];
