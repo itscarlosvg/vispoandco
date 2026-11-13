@@ -13,11 +13,15 @@ function handleCSV(file){if(!file)return;const rd=new FileReader();rd.onload=()=
   const h=rows[0].map(x=>x.trim());const idx={};Object.entries(MAP).forEach(([k,re])=>{const i=h.findIndex(x=>re.test(x.replace(/\s+/g,'_')));if(i>=0)idx[k]=i;});
   if(idx.negocio==null&&idx.nombre==null&&idx.email==null){$('#csvPrev').innerHTML='<p class="err">No encuentro columnas de empresa, nombre o email en este CSV.</p>';return;}
   const known=new Set([...LEADS.map(l=>(l.email||'').toLowerCase()).filter(Boolean),...LEADS.map(l=>(l.negocio||'').toLowerCase())]);
-  csvRows=rows.slice(1).map(r=>{const g=k=>idx[k]!=null?(r[idx[k]]||'').trim():'';const nombre=[g('nombre'),g('apellido')].filter(Boolean).join(' ');
-    return {negocio:g('negocio')||nombre||g('email'),nombre:g('negocio')?nombre:'',email:g('email'),telefono:g('telefono'),web:g('web'),ciudad:g('ciudad'),nota:g('nota')||(g('sector')?'Sector: '+g('sector'):''),fuente:'Harvey',etapa:'nuevo',proxima:TODAY()};})
-    .filter(o=>o.negocio&&!known.has((o.email||'').toLowerCase())&&!known.has(o.negocio.toLowerCase())).slice(0,500);
-  const dup=rows.length-1-csvRows.length;
-  $('#csvPrev').innerHTML=csvRows.length?`<div class="tbl-wrap"><table><thead><tr><th>Negocio</th><th>Contacto</th><th>Email</th><th>Ciudad</th></tr></thead><tbody>${csvRows.slice(0,6).map(o=>`<tr><td>${esc(o.negocio)}</td><td>${esc(o.nombre||'—')}</td><td>${esc(o.email||'—')}</td><td>${esc(o.ciudad||'—')}</td></tr>`).join('')}</tbody></table></div><div class="acts" style="align-items:center"><button class="btn" type="button" id="csvGo">Importar ${csvRows.length} leads</button><span class="mono" style="color:var(--muted)">${dup>0?dup+' repetidos o vacíos se omiten':''}</span></div>`:'<p class="note">Todos los leads de este archivo ya están en Clientes.</p>';
+  const all=rows.slice(1).filter(r=>r.some(c=>String(c||'').trim())).map(r=>{const g=k=>idx[k]!=null?(r[idx[k]]||'').trim():'';const nombre=[g('nombre'),g('apellido')].filter(Boolean).join(' ');
+    return {negocio:g('negocio')||nombre||g('email'),nombre:g('negocio')?nombre:'',email:g('email'),telefono:g('telefono'),web:g('web'),ciudad:g('ciudad'),nota:g('nota')||(g('sector')?'Sector: '+g('sector'):''),fuente:'Harvey',etapa:'nuevo',proxima:TODAY()};});
+  const seen=new Set();let noName=0,dup=0;const ok=[];
+  all.forEach(o=>{if(!o.negocio){noName++;return;}const k=o.negocio.toLowerCase()+'|'+(o.telefono||o.email||'').toLowerCase();
+    if(known.has(o.negocio.toLowerCase())&&(!o.email||known.has(o.email.toLowerCase()))||seen.has(k)){dup++;return;}seen.add(k);ok.push(o);});
+  const MAXI=500;csvRows=ok.slice(0,MAXI);const over=ok.length-csvRows.length;
+  const fmt=n=>n.toLocaleString('es-ES');
+  const info=[`${fmt(all.length)} filas`,over>0?`se importan las ${fmt(MAXI)} primeras (límite por importación)`:'',dup?`${fmt(dup)} ya están en Clientes o repetidos`:'',noName?`${fmt(noName)} sin nombre`:''].filter(Boolean).join(' · ');
+  $('#csvPrev').innerHTML=csvRows.length?`<div class="tbl-wrap"><table><thead><tr><th>Negocio</th><th>Teléfono</th><th>Ciudad</th><th>Nota</th></tr></thead><tbody>${csvRows.slice(0,6).map(o=>`<tr><td>${esc(o.negocio)}</td><td>${esc(o.telefono||'—')}</td><td>${esc(o.ciudad||'—')}</td><td>${esc(o.nota||'—')}</td></tr>`).join('')}</tbody></table></div><div class="acts" style="align-items:center"><button class="btn" type="button" id="csvGo">Importar ${fmt(csvRows.length)} leads</button><span class="mono" style="color:var(--muted)">${info}</span></div>`:'<p class="note">Todos los leads de este archivo ya están en Clientes.</p>';
   const go=$('#csvGo');if(go)go.onclick=async()=>{go.disabled=true;let n=0;for(const o of csvRows){try{await createLead(o);n++;go.textContent=`Importando ${n}/${csvRows.length}…`;}catch(e){showNote(dbMsg(e));break;}}
     $('#csvPrev').innerHTML=`<p class="note">${n} leads importados en Clientes, etapa Nuevo.</p>`;csvRows=[];};};
   rd.readAsText(file);}
