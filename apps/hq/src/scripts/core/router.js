@@ -3,7 +3,7 @@ function show(v){if(!VIEWS[v])v='resumen';
   document.body.classList.toggle('hv-view',v==='harvey');
   $$('[data-v]').forEach(s=>s.hidden=s.dataset.v!==v);
   $$('.nav button').forEach(b=>b.dataset.go===v?b.setAttribute('aria-current','page'):b.removeAttribute('aria-current'));
-  $('#vTitle').textContent=VIEWS[v][0];$('#vSub').textContent=VIEWS[v][1]||subFor(v);
+  $('#vTitle').textContent=VIEWS[v][0];$('#navCur').textContent=VIEWS[v][0];document.querySelector('.side').classList.remove('open');$('#navT').setAttribute('aria-expanded','false');$('#vSub').textContent=v==='pipeline'&&matchMedia('(max-width:760px)').matches?'':(VIEWS[v][1]||subFor(v));
   if(v==='harvey')setTimeout(()=>$('#hvIn').focus(),50);
   if(v==='objetivos'&&typeof renderGoalsView==='function'){$('#gForm').innerHTML='';renderGoalsView();}}
 function subFor(v){const d=new Date();if(v==='resumen')return `${DOW[d.getDay()]} ${d.getDate()} de ${MONL[d.getMonth()]} de ${d.getFullYear()}`;return '';}
@@ -12,3 +12,5 @@ addEventListener('hashchange',()=>show(location.hash.slice(1)));
 show(location.hash.slice(1)||'resumen');
 
 /* ---------- render ---------- */
+
+$('#navT').addEventListener('click',()=>{const o=document.querySelector('.side').classList.toggle('open');$('#navT').setAttribute('aria-expanded',String(o));});
