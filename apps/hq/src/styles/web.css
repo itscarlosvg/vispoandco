@@ -4,8 +4,6 @@
 .lg-logo{display:flex;justify-content:center;margin-bottom:10px}
 .lg-logo .logo{width:150px;height:auto}
 .lg-card .btn{justify-content:center;height:46px}
-.lg-new{border:0;background:none;color:var(--muted);font-size:13px;cursor:pointer;text-decoration:underline;justify-self:center}
-.lg-new:hover{color:var(--paper)}
 body.locked .app{visibility:hidden}
 .link-out{margin-top:10px;border:0;background:none;padding:0;color:var(--muted);font:500 12px var(--f-mono);cursor:pointer;text-align:left}
 .link-out:hover{color:var(--paper)}

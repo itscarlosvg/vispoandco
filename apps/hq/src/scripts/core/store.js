@@ -94,9 +94,4 @@ function hqLogin(sb){return new Promise(async resolve=>{
     btn.disabled=false;
     if(r.error){err.textContent=/confirm/i.test(r.error.message)?'Confirma tu email antes de entrar.':'Email o contraseña incorrectos.';return;}
     await ok(r.data.session);});
-  $('#lgNew').addEventListener('click',async()=>{err.textContent='';
-    const email=$('#lgMail').value.trim(),password=$('#lgPass').value;
-    if(!email||password.length<8){err.textContent='Escribe tu email y una contraseña de al menos 8 caracteres.';return;}
-    const r=await sb.auth.signUp({email,password});
-    err.textContent=r.error?r.error.message:'Cuenta creada. Pide a Claude que la active.';});
 });}
