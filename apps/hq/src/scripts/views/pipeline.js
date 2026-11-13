@@ -7,6 +7,6 @@ function card(l){const now=TODAY();const od=l.proxima&&l.proxima<now&&OPEN.inclu
 function board(){
   const q=$('#plQ').value.trim().toLowerCase(),src=$('#plSrc').value;
   const ls=LEADS.filter(l=>(!src||l.fuente===src)&&(!q||[l.negocio,l.nombre,l.ciudad,l.sector,l.servicios].join(' ').toLowerCase().includes(q)));
-  $('#board').innerHTML=STAGES.map(([k,n,c])=>{const c2=ls.filter(l=>l.etapa===k).sort((a,b)=>(a.proxima||'9')<(b.proxima||'9')?-1:1);const v=c2.reduce((s,l)=>s+(+l.valor||0),0);
+  $('#board').innerHTML=STAGES.map(([k,n,c])=>{const c2=ls.filter(l=>l.etapa===k).sort((a,b)=>(a.proxima||'9').localeCompare(b.proxima||'9')||(a.creado||'').localeCompare(b.creado||''));const v=c2.reduce((s,l)=>s+(+l.valor||0),0);
     return `<div class="col" data-stage="${k}"><div class="col-h"><b><i style="background:${c}"></i>${n}</b><span class="num">${c2.length}${v?' · '+eur(v):''}</span></div>${c2.map(card).join('')||''}</div>`;}).join('');
 }

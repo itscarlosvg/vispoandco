@@ -8,7 +8,7 @@ body.locked .app{visibility:hidden}
 .link-out{margin-top:10px;border:0;background:none;padding:0;color:var(--muted);font:500 12px var(--f-mono);cursor:pointer;text-align:left}
 .link-out:hover{color:var(--paper)}
 html.web .app{grid-template-columns:232px minmax(0,1fr)}
-html.web .harvey,html.web .nav .h-only,html.web #impRead{display:none!important}
+html.web .harvey,html.web .nav .h-only,html.web #impRead,html.web #ldAsk{display:none!important}
 @media (max-width:1280px){html.web .app{grid-template-columns:212px minmax(0,1fr)}}
 @media (max-width:760px){html.web .app{grid-template-columns:minmax(0,1fr)}}
 html.web [data-v=importar] > .card:first-child,html.web [data-v=importar] .card:has(#impRead){display:none!important}
