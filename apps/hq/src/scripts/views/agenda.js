@@ -10,7 +10,7 @@ function agenda(S){
 }
 
 /* ---------- interactions ---------- */
-document.addEventListener('click',e=>{const r=e.target.closest('[data-lead]');if(r&&!e.target.closest('.lc.drag'))openLead(r.dataset.lead);
+document.addEventListener('click',e=>{const r=e.target.closest('[data-lead]');if(r&&!e.target.closest('.lc.drag')&&!TD.justDropped)openLead(r.dataset.lead);
   const tk=e.target.closest('[data-task]');if(tk)location.hash='agenda';});
 document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.matches('.lc'))openLead(e.target.dataset.lead);});
 $('#plQ').addEventListener('input',board);$('#plSrc').addEventListener('change',board);
