@@ -43,7 +43,8 @@ try {
     await page.click('#ctSend');
     assert.match(await page.locator('#qErr').textContent(), /opción/, 'pide un servicio');
     await page.locator('#ctSvc .opt').first().click();
-    await page.locator('#ctSec .opt').nth(3).click();
+    await page.selectOption('#q-sec', { index: 4 });
+    await page.selectOption('#q-now', { index: 1 });
     await page.fill('#q-name', 'Laura');
     await page.fill('#q-biz', 'Lumen');
     await page.fill('#q-mail', 'laura@lumen.es');

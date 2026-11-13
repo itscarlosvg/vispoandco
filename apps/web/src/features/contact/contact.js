@@ -5,8 +5,9 @@
   const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
   const opt=(type,name,v,l)=>`<label class="opt"><input type="${type}" name="${name}" value="${esc(v)}"><span>${esc(l)}</span></label>`;
   $('#ctSvc').innerHTML=SVC.map(s=>opt('checkbox','ct-svc',s[0],s[1])).join('');
-  $('#ctSec').innerHTML=SECTORS.map(s=>opt('radio','ct-sec',s,s)).join('');
-  $('#ctNow').innerHTML=NOW.map(s=>opt('radio','ct-now',s,s)).join('');
+  const selOpts=(list,ph)=>`<option value="">${ph}</option>`+list.map(s=>`<option>${esc(s)}</option>`).join('');
+  $('#q-sec').innerHTML=selOpts(SECTORS,'Elige tu sector');
+  $('#q-now').innerHTML=selOpts(NOW,'Elige una opción');
   const ctForm=$('#ctForm');
   const picked=n=>$$(`#ctForm input[name="${n}"]`).filter(i=>i.checked).map(i=>i.value);
   /** Rellena el formulario desde un plan o un proyecto y lleva al usuario a él. */
@@ -89,7 +90,7 @@
   let sending=false,qRef=null,qSent=0;
   ctForm.addEventListener('submit',async e=>{
     e.preventDefault();if(sending)return;const err=$('#qErr');
-    const svc=picked('ct-svc').map(k=>SVC.find(s=>s[0]===k)[1]),sector=picked('ct-sec')[0]||'',now=picked('ct-now')[0]||'';
+    const svc=picked('ct-svc').map(k=>SVC.find(s=>s[0]===k)[1]),sector=$('#q-sec').value,now=$('#q-now').value;
     const name=$('#q-name').value.trim(),biz=$('#q-biz').value.trim(),mail=$('#q-mail').value.trim(),tel=$('#q-tel').value.trim(),msg=$('#q-msg').value.trim();
     if(!svc.length){err.textContent='Elige al menos una opción.';$('#ctSvc input').focus();return;}
     if(!name){err.textContent='Escribe tu nombre.';$('#q-name').focus();return;}
