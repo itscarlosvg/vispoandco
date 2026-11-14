@@ -2,7 +2,7 @@
 // Builds both apps into dist/.
 //   node scripts/build.mjs            → web + hq
 //   node scripts/build.mjs web|hq     → one app
-import { readFileSync, writeFileSync, mkdirSync, copyFileSync, rmSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, copyFileSync, cpSync, rmSync, existsSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
@@ -48,13 +48,15 @@ function buildWeb() {
   rmSync(join(DIST, site), { recursive: true, force: true });
   write(`${site}/index.html`, fill(read(`${src}/document.html`), { CONTENT: body.trimEnd() }));
   copyFileSync(join(ROOT, 'apps/web/public/favicon.svg'), join(DIST, site, 'favicon.svg'));
+  // Firma de correo en /firma (página para copiarla + imágenes que cargan los correos)
+  cpSync(join(ROOT, 'apps/web/public/firma'), join(DIST, site, 'firma'), { recursive: true });
   // 3) Panel de administración en /admin (mismo panel que en Claude, con login y sin Harvey)
   const admin = hq('web');
   write(`${site}/admin/index.html`, fill(read('apps/hq/src/document.html'), { CONTENT: admin.replace(/^<title>[^\n]*\n/, '').trimEnd() }));
   const zip = join(DIST, 'web/vispoandco-netlify.zip');
   rmSync(zip, { force: true });
   try {
-    execFileSync('zip', ['-q', '-X', '-r', zip, 'index.html', 'favicon.svg', 'admin'], { cwd: join(DIST, site) });
+    execFileSync('zip', ['-q', '-X', '-r', zip, 'index.html', 'favicon.svg', 'admin', 'firma'], { cwd: join(DIST, site) });
   } catch { console.log('web  · zip no disponible: se omite el paquete para subir a mano'); }
   console.log(`web  ✓ artifact.html ${kb(html)} · site/ (+ /admin) · vispoandco-netlify.zip`);
 }
