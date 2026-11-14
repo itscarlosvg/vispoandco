@@ -16,5 +16,6 @@
 // @include features/contact/contact.js
 // @include features/work/work.js
 // @include features/work/demos/clinica.js
+// @include features/work/demos/conceptos.js
 // @include scripts/ui/legal-dialog.js
 })();
