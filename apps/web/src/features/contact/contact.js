@@ -27,6 +27,8 @@
   const SB_URL='{{SB_URL}}',SB_KEY='{{SB_KEY}}';
   const isOwn=()=>/^https?:$/.test(location.protocol)&&!/claude|anthropic|usercontent|localhost|127\.0\.0\.1/.test(location.hostname);
   const madrid=iso=>new Intl.DateTimeFormat('sv-SE',{timeZone:'Europe/Madrid',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date(iso)).replace(' ','T');
+  // prueba de consentimiento: fecha, hora e IP las guarda el servidor (tabla consentimientos)
+  function toConsent(p){if(!isOwn())return;fetch(SB_URL+'/rest/v1/rpc/web_consent',{method:'POST',keepalive:true,headers:{'Content-Type':'application/json',apikey:SB_KEY,Authorization:'Bearer '+SB_KEY},body:JSON.stringify({p})}).catch(()=>{});}
   function toCRM(p){if(!isOwn())return;fetch(SB_URL+'/rest/v1/rpc/web_lead',{method:'POST',keepalive:true,headers:{'Content-Type':'application/json',apikey:SB_KEY,Authorization:'Bearer '+SB_KEY},body:JSON.stringify({p})}).catch(()=>{});}
   function embedCal(pre,fallback){const box=$('#calInline');box.hidden=false;box.innerHTML='';
     try{(function(C,A,L){let p=function(a,ar){a.q.push(ar);};let d=C.document;C.Cal=C.Cal||function(){let cal=C.Cal;let ar=arguments;if(!cal.loaded){cal.ns={};cal.q=cal.q||[];d.head.appendChild(d.createElement("script")).src=A;cal.loaded=true;}if(ar[0]===L){const api=function(){p(api,arguments);};const namespace=ar[1];api.q=api.q||[];if(typeof namespace==="string"){cal.ns[namespace]=cal.ns[namespace]||api;p(cal.ns[namespace],ar);p(cal,["initNamespace",namespace]);}else p(cal,ar);return;}p(cal,ar);};})(window,"https://app.cal.com/embed/embed.js","init");
@@ -102,6 +104,7 @@
     const data={'form-name':'presupuesto','bot-field':'',subject:(qSent>1?'Corrección de solicitud · ':'Nueva solicitud · ')+biz+' · '+qRef,referencia:qRef+(qSent>1?' (versión '+qSent+', sustituye a la anterior)':''),
       nombre:name,negocio:biz,email:mail,telefono:tel,sector,situacion:now,reunion:'Cal.com',formato:'Videollamada',servicios:svc.join(', '),comentarios:msg};
     const own=isOwn();
+    toConsent({ref:qRef,nombre:name,email:mail,acepta:true,politica:POLICY,pagina:location.origin+location.pathname});
     toCRM({ref:qRef,nombre:name,negocio:biz,email:mail,telefono:tel,sector,servicios:svc.join(', '),nota:[now?'Situación: '+now:'',msg].filter(Boolean).join('\n')});
     const send=$('#ctSend span');sending=true;send.textContent='Enviando…';
     let ok=false;
