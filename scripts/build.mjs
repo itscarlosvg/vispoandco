@@ -33,6 +33,7 @@ function buildWeb() {
     LOGO_LIGHT_F: brand.logo('logo'),
     LOGO_MARK: brand.mark,
     IG_ICON: brand.instagram,
+    MAIL_ICON: brand.mail,
     ...brand.icons,
     ...brand.illustrations,
     ...brand.caseThumbs,

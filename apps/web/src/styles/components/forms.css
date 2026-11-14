@@ -3,6 +3,7 @@
 .contact h2{font-size:var(--s-2)}
 .contact .aside{display:grid;gap:22px;position:sticky;top:110px}
 .contact .aside p{color:#CFCCC4;font-size:18px;max-width:440px}
+.handles{display:flex;flex-wrap:wrap;gap:12px}
 .handle{display:inline-flex;align-items:center;gap:12px;font:600 22px var(--f-display);text-decoration:none;color:var(--paper);padding:14px 18px;border-radius:14px;box-shadow:inset 0 0 0 1px var(--line);width:max-content;max-width:100%}
 .handle:hover{box-shadow:inset 0 0 0 1px var(--acc)}
 form.brief{border-radius:26px;background:var(--ink-2);box-shadow:inset 0 0 0 1px var(--line);padding:clamp(22px,3.4vw,40px);display:grid;gap:24px}
