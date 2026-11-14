@@ -6,6 +6,8 @@
     addEventListener('pointermove',e=>{tx=e.clientX;ty=e.clientY;cur.classList.add('on');});
     addEventListener('pointerleave',()=>cur.classList.remove('on'));
     document.addEventListener('pointerover',e=>{cur.classList.toggle('big',!!e.target.closest('a,button,summary,.opt,input,select,textarea,.case'));});
-    (function loop(){x+=(tx-x)*.25;y+=(ty-y)*.25;const w=cur.offsetWidth,h=cur.offsetHeight;cur.style.transform=`translate3d(${x-w/2}px,${y-h/2}px,0)`;requestAnimationFrame(loop);})();
+    // un <dialog> abierto se pinta por encima de todo: el cursor se mete dentro para seguir viéndose
+    (function loop(){const host=document.querySelector('dialog[open]')||document.body;if(cur.parentElement!==host)host.appendChild(cur);
+      x+=(tx-x)*.25;y+=(ty-y)*.25;const w=cur.offsetWidth,h=cur.offsetHeight;cur.style.transform=`translate3d(${x-w/2}px,${y-h/2}px,0)`;requestAnimationFrame(loop);})();
   }
 

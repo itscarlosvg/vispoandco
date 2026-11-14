@@ -13,7 +13,6 @@
   .svc.web,.svc.app{grid-column:span 12}
   .svc.vid{grid-template-columns:1fr}
   .extras{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .work{grid-template-columns:1fr 1fr}
   .plans{grid-template-columns:1fr}
   .contact{grid-template-columns:1fr}
   .contact .aside{position:static}

@@ -22,7 +22,6 @@ const PUBLIC = ['favicon.svg', 'apple-touch-icon.png', 'icon-512.png', 'og.png',
 
 function buildWeb() {
   const src = 'apps/web/src';
-  const carta = read(`${src}/features/work/data/carta.html`);
   const composed = compose('index.html', join(ROOT, src));
   const audio = (name) => has(`${src}/assets/audio/${name}`) ? read(`${src}/assets/audio/${name}`, null) : null;
   const callMp3 = audio('call.mp3'), clinicMp3 = audio('clinica.mp3');
@@ -30,7 +29,6 @@ function buildWeb() {
     // En Claude el audio va dentro del HTML; en la web se sirve aparte para que la página cargue rápido
     CALL_AUDIO: inline ? 'data:audio/mpeg;base64,' + callMp3.toString('base64') : '/media/llamada.mp3',
     CALL_DATA: read(`${src}/assets/data/call-transcript.json`),
-    CARTA_HTML: JSON.stringify(carta).replace(/<\//g, '<\\/'),
     SB_URL: SB.url,
     SB_KEY: SB.anonKey,
     // Llamada de Clínica Sonríe: audio + tiempos de cada frase (opcionales; sin ellos la demo se reproduce simulada)

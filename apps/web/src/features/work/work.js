@@ -22,52 +22,6 @@
   $$('[data-thumb-products]').forEach(el=>el.innerHTML=PRODS.slice(0,6).map(p=>`<div><figure style="background:${p.bg}">${GARM[p.g](p.c)}</figure><span><i style="font-style:normal">${p.n.split(' ')[0]}</i><i style="font-style:normal">${p.p} €</i></span></div>`).join(''));
   $$('[data-thumb-garment]').forEach(el=>el.innerHTML=GARM.dress('#C9D3F0'));
 
-  const RINGS='<svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="6"/><circle cx="20" cy="20" r="12"/><circle cx="20" cy="20" r="18"/></svg>';
-  const LEAF='<svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18"/><path d="M20 31 C 11 24, 12 13, 20 8 C 28 13, 29 24, 20 31 Z"/><path d="M20 31 L 20 13"/></svg>';
-  const CARTA_HTML={{CARTA_HTML}};
-  const HORTA=[['Grelos','Grelos',[1,2,3,11,12],'#4f7a2c'],['Nabizas','Hojas de nabo',[10,11,12],'#6b8f3a'],['Repolo','Col',[1,2,3,10,11,12],'#8fae5d'],['Porros','Puerros',[1,2,3,10,11,12],'#b7c98a'],['Limóns','Limones',[1,2,3,4,12],'#e9cf3f'],['Chícharos','Guisantes',[4,5,6],'#7fb04a'],['Amorodos','Fresas',[4,5,6],'#d8433a'],['Leitugas','Lechugas',[4,5,6,7,8,9,10],'#a3c46b'],['Cenorias','Zanahorias',[5,6,7,8,9,10,11],'#ea8a2e'],['Allos','Ajos',[6,7],'#e8e0cc'],['Cebolas','Cebollas',[6,7,8,9],'#c98b5b'],['Patacas novas','Patatas nuevas',[6,7,8,9,10],'#d9b77a'],['Cabaciñas','Calabacines',[6,7,8,9],'#5d8a3c'],['Pementos de Padrón','Pimientos de Padrón',[6,7,8,9,10],'#3f7d2b'],['Tomates','Tomates',[7,8,9,10],'#d9432f'],['Feixóns','Judías verdes',[7,8,9],'#6a9c3a'],['Figos','Higos',[8,9],'#6b3d5a'],['Cabazas','Calabazas',[9,10,11],'#ee8f2f'],['Mazás','Manzanas',[9,10,11],'#c7442e'],['Castañas','Castañas',[10,11],'#7a4a2a']];
-  const MAR=[['Mexillón','Mejillón de batea','Todo el año','#1d2c3a'],['Ameixa','Almeja','Otoño e invierno','#c9b49a'],['Zamburiña','Zamburiña','Otoño a primavera','#c0643e'],['Polbo','Pulpo','Todo el año en cocina','#8a3f4b'],['Centola','Centolla','Invierno y primavera','#b8462f'],['Rodaballo','Rodaballo','Todo el año','#6f7a6b']];
-  const MESES=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
-
-  // WebGL ría (port of the hotel's own shader)
-  function startRia(canvas,getP){
-    const gl=canvas.getContext('webgl',{antialias:false,premultipliedAlpha:false});if(!gl)return ()=>{};
-    const NOISE=`float hash(vec2 p){p=fract(p*vec2(123.34,456.21));p+=dot(p,p+45.32);return fract(p.x*p.y);}
-float noise(vec2 p){vec2 i=floor(p),f=fract(p);vec2 u=f*f*(3.0-2.0*f);return mix(mix(hash(i),hash(i+vec2(1.0,0.0)),u.x),mix(hash(i+vec2(0.0,1.0)),hash(i+vec2(1.0,1.0)),u.x),u.y);}
-float fbm(vec2 p){float v=0.0,a=0.5;mat2 m=mat2(1.6,1.2,-1.2,1.6);for(int i=0;i<5;i++){v+=a*noise(p);p=m*p;a*=0.5;}return v;}`;
-    const FS=`precision highp float;uniform float uTime;uniform vec2 uRes;uniform vec2 uMouse;uniform float uProgress;varying vec2 vUv;${NOISE}
-vec3 sky(float y,float night){vec3 duskLow=vec3(0.95,0.67,0.36);vec3 duskMid=vec3(0.60,0.45,0.43);vec3 duskTop=vec3(0.05,0.15,0.18);vec3 nightLow=vec3(0.10,0.18,0.22);vec3 nightTop=vec3(0.012,0.035,0.05);vec3 dusk=mix(duskLow,duskMid,smoothstep(0.0,0.2,y));dusk=mix(dusk,duskTop,smoothstep(0.12,0.8,y));vec3 nite=mix(nightLow,nightTop,smoothstep(0.0,0.7,y));return mix(dusk,nite,night);}
-void main(){vec2 uv=vUv;float aspect=uRes.x/uRes.y;vec2 p=vec2((uv.x-0.5)*aspect,uv.y);float t=uTime;float night=smoothstep(0.0,1.0,uProgress);
-float horizon=0.43+uMouse.y*0.012;vec2 sun=vec2(-0.2*aspect+uMouse.x*0.05,horizon+mix(0.075,0.33,night));vec3 sunCol=mix(vec3(1.0,0.8,0.52),vec3(0.82,0.88,0.96),night);float sunR=mix(0.042,0.028,night);vec3 col;
-float shoreMask=smoothstep(-0.95*aspect,-0.2,p.x)*(1.0-smoothstep(0.35*aspect,0.5*aspect,p.x)*0.7);float hill=horizon+0.004+(0.012+0.06*fbm(vec2(p.x*2.4+4.0,1.3)))*shoreMask;
-if(uv.y>=horizon){float y=(uv.y-horizon)/(1.0-horizon);col=sky(y,night);float c=fbm(vec2(p.x*1.1+t*0.01,uv.y*7.0-t*0.004));float cm=smoothstep(0.55,0.85,c)*smoothstep(0.02,0.3,y)*(1.0-y*0.5);vec3 cloud=mix(vec3(0.99,0.72,0.52),vec3(0.13,0.19,0.24),night);col=mix(col,cloud,cm*0.5);
-float d=length(p-sun);col+=sunCol*smoothstep(sunR,sunR*0.85,d);col+=sunCol*exp(-d*8.0)*mix(0.55,0.14,night);
-vec2 sg=floor(uv*uRes/2.5);float s=step(0.9972,hash(sg))*smoothstep(0.12,0.6,y)*night;col+=s*(0.6+0.4*sin(t*2.5+hash(sg+3.0)*20.0));
-if(uv.y<hill){vec3 hillCol=mix(mix(vec3(0.33,0.25,0.27),vec3(0.03,0.07,0.09),night),sky(0.0,night),0.25);col=hillCol;float lights=step(0.975,hash(vec2(floor(p.x*240.0),7.0)))*step(uv.y,horizon+0.006)*night;col+=vec3(1.0,0.78,0.45)*lights*(0.7+0.3*sin(t*3.0+p.x*90.0));}}
-else{float depth=horizon-uv.y;float z=0.08/(depth+0.004);vec2 w=vec2(p.x*z,z);float n1=fbm(w*vec2(1.2,0.45)+vec2(t*0.05,-t*0.16));float n2=fbm(w*vec2(3.2,1.0)+vec2(-t*0.08,-t*0.32));float wave=n1*0.6+n2*0.4;
-float ry=clamp(depth*1.3+(wave-0.5)*0.1,0.0,1.0);vec3 refl=sky(ry,night);vec3 deep=mix(vec3(0.03,0.13,0.15),vec3(0.008,0.035,0.05),night);col=mix(refl*0.82,deep,smoothstep(0.0,0.28,depth)*0.8);
-float dx=p.x-sun.x;float path=exp(-dx*dx/(0.0012+depth*0.07));float glit=pow(noise(w*vec2(7.0,1.6)+vec2(0.0,-t*0.9)),5.0)*4.0;col+=sunCol*path*(0.2+glit)*mix(1.0,0.5,night)*(1.0-smoothstep(0.0,0.45,depth)*0.6);
-float raft=0.0;for(int i=0;i<6;i++){float fi=float(i);float rz=2.0+fi*1.3+hash(vec2(fi,3.0))*0.6;float yr=horizon-(0.08/rz-0.004);float sc=1.0/rz;float xw=p.x*rz+fi*0.73;float cellw=1.35;float id=floor(xw/cellw);float lx=fract(xw/cellw)-0.5;float on=step(0.42,hash(vec2(id,fi+11.0)));float bob=sin(t*1.1+id*1.7+fi)*0.0008*sc*4.0;float hh=0.0075*sc;float dy=uv.y-(yr+bob);float aa=0.02;float halfW=0.13+hash(vec2(id,fi))*0.05;float inX=1.0-smoothstep(halfW-aa,halfW,abs(lx));float inY=1.0-smoothstep(hh*0.55,hh,abs(dy));float cabX=1.0-smoothstep(0.03-aa,0.03,abs(lx-0.07));float cab=cabX*step(0.0,dy)*(1.0-smoothstep(hh*2.0,hh*2.4,dy));raft=max(raft,on*max(inX*inY,cab));}
-vec3 raftCol=mix(vec3(0.12,0.09,0.1),vec3(0.01,0.02,0.03),night);col=mix(col,raftCol,raft*0.92);col+=(wave-0.5)*0.05;}
-col=mix(col,sky(0.02,night)*1.03,exp(-abs(uv.y-horizon)*40.0)*0.32);col*=mix(1.0,0.7,smoothstep(0.35,1.15,length((uv-0.5)*vec2(aspect*0.75,1.0))));gl_FragColor=vec4(col,1.0);}`;
-    const VS='attribute vec2 a;varying vec2 vUv;void main(){vUv=a*0.5+0.5;gl_Position=vec4(a,0.0,1.0);}';
-    const sh=(t,s)=>{const o=gl.createShader(t);gl.shaderSource(o,s);gl.compileShader(o);return o;};
-    const pr=gl.createProgram();gl.attachShader(pr,sh(gl.VERTEX_SHADER,VS));gl.attachShader(pr,sh(gl.FRAGMENT_SHADER,FS));gl.linkProgram(pr);
-    if(!gl.getProgramParameter(pr,gl.LINK_STATUS))return ()=>{};gl.useProgram(pr);
-    const b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
-    const loc=gl.getAttribLocation(pr,'a');gl.enableVertexAttribArray(loc);gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
-    const U=n=>gl.getUniformLocation(pr,n);const uT=U('uTime'),uR=U('uRes'),uM=U('uMouse'),uP=U('uProgress');
-    let raf=0,t=7,last=performance.now(),mx=0,my=0,tx=0,ty=0;
-    const mv=e=>{const r=canvas.getBoundingClientRect();tx=((e.clientX-r.left)/r.width)*2-1;ty=-(((e.clientY-r.top)/r.height)*2-1);};
-    canvas.parentElement.addEventListener('pointermove',mv);
-    const frame=now=>{const dpr=Math.min(devicePixelRatio||1,1.5),w=canvas.clientWidth,h=canvas.clientHeight;
-      if(w&&h&&(canvas.width!==Math.round(w*dpr)||canvas.height!==Math.round(h*dpr))){canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);}
-      gl.viewport(0,0,canvas.width,canvas.height);t+=Math.min(now-last,50)/1000;last=now;mx+=(tx-mx)*.04;my+=(ty-my)*.04;
-      gl.uniform1f(uT,RM?7:t);gl.uniform2f(uR,canvas.width,canvas.height);gl.uniform2f(uM,mx,my);gl.uniform1f(uP,getP());gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
-      if(!RM)raf=requestAnimationFrame(frame);};
-    raf=requestAnimationFrame(frame);
-    return ()=>{cancelAnimationFrame(raf);canvas.parentElement&&canvas.parentElement.removeEventListener('pointermove',mv);gl.getExtension('WEBGL_lose_context')?.loseContext();};
-  }
   function qrSvg(seed,fg){let s=seed;const r=()=>(s=(s*9301+49297)%233280)/233280;const N=25,c=[];
     const finder=(x,y)=>{for(let i=0;i<7;i++)for(let j=0;j<7;j++){const e=i===0||i===6||j===0||j===6||(i>1&&i<5&&j>1&&j<5);if(e)c.push([x+i,y+j]);}};
     finder(0,0);finder(N-7,0);finder(0,N-7);
@@ -75,54 +29,6 @@ col=mix(col,sky(0.02,night)*1.03,exp(-abs(uv.y-horizon)*40.0)*0.32);col*=mix(1.0
     return `<svg viewBox="0 0 ${N} ${N}" width="100%" height="100%" shape-rendering="crispEdges" aria-hidden="true">${c.map(([x,y])=>`<rect x="${x}" y="${y}" width="1" height="1" fill="${fg}"/>`).join('')}</svg>`;}
 
   /* views */
-  function vHotel(view,ctx){
-    view.innerHTML=`<div class="bw"><div class="bw-bar"><i></i><i></i><i></i><a href="https://hotel-o-castro-preview.netlify.app" target="_blank" rel="noopener" class="bw-url">hotel-o-castro-preview.netlify.app ↗</a></div><div class="bw-c"><div class="hx">
-    <section class="hx-hero"><canvas></canvas><nav class="hx-nav"><span class="hx-brand">${RINGS}O Castro</span><span class="hx-links"><a data-go="rooms">Habitaciones</a><a data-tab="resto">Restaurante</a><a data-go="res">Reservar</a></span><button class="hx-cta" type="button" data-go="res">Reservar</button></nav>
-      <div class="hx-meta mn"><span>42°28′35″N · 8°53′43″W</span><span>Ría de Arousa</span></div>
-      <h4 class="hx-title" style="margin:0"><em>Hotel</em><b>O Castro</b></h4>
-      <div class="hx-foot"><p>Un hotel acogedor y familiar frente a la Ría de Arousa, en Reboredo, O Grove.</p><span class="hx-badge"><svg viewBox="0 0 120 120"><defs><path id="hxb" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0"/></defs><text><textPath href="#hxb">Baixa á ría · Baixa á ría · Baixa á ría ·</textPath></text></svg>↓</span></div></section>
-    <section class="hx-sec hx-mani"><p class="hx-eye">A casa</p><p class="big">En Galicia, un castro es un poblado antiguo de piedra, en alto y mirando al mar. Aquí seguimos esa idea: muros de granito, la Ría de Arousa delante y una huerta detrás.</p>
-      <dl class="hx-facts"><div><dt>Valoración en Google</dt><dd>4,3<small>/5</small></dd></div><div><dt>Habitaciones</dt><dd>4<small>tipos</small></dd></div><div><dt>Desayuno</dt><dd>Incluido</dd></div><div><dt>Reserva</dt><dd>Directa</dd></div></dl></section>
-    <section class="hx-sec hx-mani" data-sec="rooms" style="padding-top:0;--hac:#16424a"><p class="hx-eye">Os cuartos</p><h5 class="hx-h2">Cuatro formas de <em>quedarse</em></h5><div class="hx-rooms">
-      ${[['Doble','2 personas','Dos camas o cama de matrimonio, con vistas a la piscina.','#b9b4a8','#16424a',['Baño privado','Wifi','Desayuno incluido']],['Doble con vistas','2 personas · vistas a la ría','Despiértate con la Ría de Arousa delante de la ventana.','#16424a','#d6a73a',['Vistas a la ría','Calefacción','Desayuno incluido']],['Triple','3 personas','Amplia y con balcón, pensada para familias o grupos pequeños.','#50614f','#c9c3b3',['Balcón','Wifi','Desayuno incluido']],['Cuádruple','4 personas','Espacio para toda la familia, con balcón y opción con vistas al mar.','#0c2226','#8fb3b0',['Balcón','Baño privado','Desayuno incluido']]].map(r=>`<article class="hx-room"><div><span class="mn" style="opacity:.7">${r[1]}</span><b>${r[0]}</b><p>${r[2]}</p><span class="hx-chips">${r[5].map(c=>`<i>${c}</i>`).join('')}</span></div></article>`).join('')}</div></section>
-    <section class="hx-teaser"><div class="hx-mq"><span>Mar e Horta</span><i></i><span>Restaurante O Castro</span><i></i><span>Mar e Horta</span><i></i><span>Restaurante O Castro</span><i></i></div>
-      <div class="hx-tgrid"><div><p class="hx-eye">O restaurante</p><h5 class="hx-h2" style="font-family:Gloock,serif;font-weight:400">Cocina gallega con lo que da <em>la ría y nuestra huerta</em></h5></div><div><p>Marisco, pescado y recetas caseras con vistas a la ría. Un restaurante con vida propia, abierto también a quien no se aloja en el hotel.</p><button class="hx-round" type="button" data-tab="resto">Entrar al restaurante</button></div></div></section>
-    <section class="hx-sec hx-res" data-sec="res"><h5 class="hx-h2">Reserva <em>directa</em></h5><ul><li><span>Teléfono</span>+34 986 733 819</li><li><span>WhatsApp</span>Escribir</li><li><span>Email</span>info@hotelocastro.es</li></ul></section>
-    <footer class="hx-fw">O Castro</footer></div></div></div>`;
-    const c=view.querySelector('.bw-c');
-    view.querySelectorAll('[data-go]').forEach(a=>a.addEventListener('click',()=>{const s=view.querySelector(`[data-sec="${a.dataset.go}"]`);if(s)c.scrollTo({top:s.offsetTop,behavior:RM?'auto':'smooth'});}));
-    view.querySelectorAll('[data-tab]').forEach(a=>a.addEventListener('click',()=>ctx.tab(a.dataset.tab)));
-    return startRia(view.querySelector('canvas'),()=>Math.min(1,c.scrollTop/(c.clientHeight*.9)));
-  }
-  function vResto(view,ctx){
-    const m0=new Date().getMonth()+1;
-    view.innerHTML=`<div class="bw"><div class="bw-bar"><i></i><i></i><i></i><span>Restaurante O Castro · Mar e Horta</span></div><div class="bw-c"><div class="rx">
-    <section class="rx-hero"><nav class="hx-nav"><span class="hx-brand">${LEAF}O Castro <em style="font:400 1.1em 'Instrument Serif',serif;text-transform:none">Restaurante</em></span><span class="hx-links rx-links"><a data-go="horta">A horta</a><a data-go="mar">O mar</a><a data-tab="carta">Carta</a><a data-tab="web">← Hotel</a></span><button class="hx-cta" type="button" data-tab="carta">Ver la carta</button></nav>
-      <p class="hx-meta mn"><span>Restaurante O Castro</span><span>Reboredo · O Grove</span></p>
-      <h4 class="rx-title" style="margin:0"><span>Mar</span><span>e</span><span>Horta</span></h4>
-      <div class="hx-foot"><p>Marisco de la Ría de Arousa y verdura de nuestra propia huerta, a pocos pasos de la cocina. Cocina gallega, casera y de temporada.</p></div></section>
-    <section class="hx-sec rx-leite"><p class="hx-eye">Da horta á mesa</p><p class="big">Lo que no crece en nuestra huerta llega de la ría que tenemos delante. Cocinamos poco lo que ya es bueno.</p>
-      <div class="rx-steps"><div><b>Sembramos</b><p>La huerta está junto al hotel. Plantamos lo que mejor se da en las Rías Baixas.</p></div><div><b>Recogemos</b><p>Cada cosa en su momento: grelos en invierno, pimientos y tomates en verano.</p></div><div><b>Cocinamos</b><p>Recetas de casa, con el marisco y el pescado del día.</p></div></div></section>
-    <section class="hx-sec" data-sec="horta"><p class="hx-eye">A horta · calendario</p><h5 class="rx-h2">Qué sale de la huerta <em>cada mes</em></h5>
-      <div class="rx-months" role="group" aria-label="Mes">${MESES.map((m,i)=>`<button type="button" data-m="${i+1}" aria-pressed="${i+1===m0}">${m}</button>`).join('')}</div><ul class="rx-produce"></ul></section>
-    <section class="hx-sec rx-sea" data-sec="mar"><p class="hx-eye">O mar</p><h5 class="rx-h2">Lo que trae <em>la ría</em></h5><div class="rx-seagrid">${MAR.map(s=>`<div><i style="background:${s[3]}"></i><b>${s[0]}</b><small>${s[1]} · ${s[2]}</small></div>`).join('')}</div></section>
-    <section class="hx-sec rx-cab"><h5 class="rx-h2">Reserva <em>mesa</em></h5><button class="hx-round" type="button" data-tab="carta" style="border-color:#16230f">Ver la carta de hoy</button></section></div></div></div>`;
-    const c=view.querySelector('.bw-c'),list=view.querySelector('.rx-produce');
-    const fill=m=>{list.innerHTML=HORTA.filter(h=>h[2].includes(m)).map(h=>`<li><i style="background:${h[3]}"></i><span><b>${h[0]}</b><small>${h[1]}</small></span></li>`).join('');};
-    fill(m0);
-    view.querySelector('.rx-months').addEventListener('click',e=>{const b=e.target.closest('[data-m]');if(!b)return;view.querySelectorAll('.rx-months button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));fill(+b.dataset.m);});
-    view.querySelectorAll('[data-go]').forEach(a=>a.addEventListener('click',()=>{const s=view.querySelector(`[data-sec="${a.dataset.go}"]`);if(s)c.scrollTo({top:s.offsetTop,behavior:RM?'auto':'smooth'});}));
-    view.querySelectorAll('[data-tab]').forEach(a=>a.addEventListener('click',()=>ctx.tab(a.dataset.tab)));
-    return ()=>{};
-  }
-  function vCarta(view){
-    view.innerHTML=`<div class="ph"><div class="ph-s"><div class="cq"><main class="wrap">${CARTA_HTML}</main></div></div></div><div class="cq-side"><div class="qr">${qrSvg(7,'#13201B')}</div><b>Un QR en cada mesa</b><span>El restaurante cambia platos, precios y el menú del día desde el móvil, y marca lo agotado al momento. También la descarga en PDF.</span></div>`;
-    const sc=view.querySelector('.cq');
-    sc.addEventListener('click',e=>{const a=e.target.closest('[data-href]');if(a){e.preventDefault();const id=a.getAttribute('data-href').slice(1);const t=sc.querySelector(`[data-s="${id}"],[data-x="${id}"]`);if(t)sc.scrollTo({top:t.offsetTop-60,behavior:RM?'auto':'smooth'});return;}
-      const p=e.target.closest('.plato');if(p){p.classList.toggle('agotado');const has=p.querySelector('.tag-out');if(p.classList.contains('agotado')&&!has){const t=document.createElement('span');t.className='tag-out';t.textContent='Agotado';p.querySelector('.p-name').after(t);}else if(!p.classList.contains('agotado')&&has)has.remove();}});
-    if(matchMedia('(max-width:700px)').matches)view.querySelector('.cq-side').hidden=true;
-    return ()=>{};
-  }
   function vShop(view,ctx){
     const st=ctx.state.shop||(ctx.state.shop={cat:'Todo',bag:[]});
     view.innerHTML=`<div class="bw"><div class="bw-bar"><i></i><i></i><i></i><span>ateliernube.es</span></div><div class="bw-c"><div class="an">
@@ -210,9 +116,6 @@ col=mix(col,sky(0.02,night)*1.03,exp(-abs(uv.y-horizon)*40.0)*0.32);col*=mix(1.0
     render();return ()=>clearTimeout(nt);
   }
   const CASES={
-    castro:{eye:'Proyecto real · En desarrollo',wip:true,t:'Hotel O Castro',p:'Web para un hotel familiar frente a la Ría de Arousa y su restaurante, cada uno con identidad propia, y una carta digital que el restaurante cambia cada día.',
-      list:['Web del hotel con la ría al atardecer generada en 3D, en tiempo real','Restaurante como marca propia: Mar e Horta','Calendario interactivo de lo que da la huerta cada mes','Carta QR editable desde el móvil, con alérgenos y PDF','Reserva directa, sin intermediarios'],
-      ext:'https://hotel-o-castro-preview.netlify.app',tabs:[['web','Web del hotel',vHotel],['resto','Restaurante',vResto],['carta','Carta QR',vCarta]],svc:['web']},
     atelier:{eye:'Concepto · Tienda de moda',t:'Atelier Nube',p:'Tienda online para una marca de ropa de mujer: catálogo por colecciones, bolsa de compra y pago en pocos pasos, más reels cada mes para Instagram.',
       list:['Catálogo con filtros, tallas y vista rápida','Bolsa con aviso de envío gratis','Pago con tarjeta, Bizum y Apple Pay','Reels de colección, looks y taller'],
       tabs:[['shop','Tienda online',vShop],['reels','Reels',vReels]],svc:['shop','vid']},
